@@ -1,0 +1,1485 @@
+
+**** Log file opened at 2020-12-16 14:42:45.648458 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: E:\AHMED\Customerportal\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 4x AMD64 Level 6 (Mod 42 Step 7), Operating_system: Windows NT 10.0
+ Hostname: ACER-ASPIRE, IP address: 172.17.3.129, IPv6 address: fe80::cc44:b15e:970c:3ccf
+
+2020-12-16 14:42:45.649566 [18848] >> Info entry
+	Did not find config file E:\AHMED\Customerportal\CustomerPortal_WebAPI\CustomerPortalWebApi\sapnwrfc.ini.
+
+**** Log file opened at 2020-12-30 14:20:15.690380 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: E:\AHMED\Customerportal\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 4x AMD64 Level 6 (Mod 42 Step 7), Operating_system: Windows NT 10.0
+ Hostname: ACER-ASPIRE, IP address: 172.17.3.130, IPv6 address: fe80::1855:d468:8a00:a935
+
+2020-12-30 14:20:15.691371 [17132] >> Error entry
+	[Handle: 2445360620400	ConvID: 38396192	Target: PRDAP1	SysID: PRD	SysNr: 03	User: SAPSUPPORT	Mandant: 700	Language: E	Codepage: 4103]
+	RfcCommunicationException: Return Value: 0, Code: RFC_COMMUNICATION_FAILURE, Message: no SAP ErrInfo available
+
+**** Log file opened at 2020-12-30 16:09:13.220136 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: E:\AHMED\Customerportal\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 4x AMD64 Level 6 (Mod 42 Step 7), Operating_system: Windows NT 10.0
+ Hostname: ACER-ASPIRE, IP address: 192.168.1.163, IPv6 address: fe80::1573:5e34:c2b1:d5a0
+
+2020-12-30 16:09:13.220618 [18036] >> Error entry
+	[Handle: 2465083735296	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host ACER-ASPIRE with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Wed Dec 30 16:09:13 2020
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2020-12-30 16:13:14.894972 [00124] >> Error entry
+	[Handle: 2465071058288	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Wed Dec 30 16:13:14 2020
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2020-12-30 17:02:10.235522 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: E:\AHMED\Customerportal\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 4x AMD64 Level 6 (Mod 42 Step 7), Operating_system: Windows NT 10.0
+ Hostname: ACER-ASPIRE, IP address: 192.168.1.163, IPv6 address: fe80::1573:5e34:c2b1:d5a0
+
+2020-12-30 17:02:10.236002 [22932] >> Error entry
+	[Handle: 1664995800080	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host ACER-ASPIRE with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Wed Dec 30 17:02:10 2020
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2020-12-30 17:04:04.573765 [21772] >> Error entry
+	[Handle: 1664996626064	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Wed Dec 30 17:04:04 2020
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-02 12:15:43.298317 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: E:\AHMED\Customerportal\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 4x AMD64 Level 6 (Mod 42 Step 7), Operating_system: Windows NT 10.0
+ Hostname: ACER-ASPIRE, IP address: 10.212.134.124, IPv6 address: fe80::1855:d468:8a00:a935
+
+2021-01-02 12:15:43.299079 [03584] >> Error entry
+	[Handle: 1394627979792	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host ACER-ASPIRE with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Sat Jan 02 12:15:43 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-09 15:01:18.934519 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\Ahmed's Project's\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.133, IPv6 address: fe80::c942:eda4:7452:d5a2
+
+2021-01-09 15:01:19.038265 [18824] >> Error entry
+	[Handle: 2306302979488	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Sat Jan 09 15:01:18 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-13 17:33:29.807883 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\Ahmed's Project's\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::ed1d:f8b8:2386:163b
+
+2021-01-13 17:33:29.909646 [25380] >> Error entry
+	[Handle: 1908076299056	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Wed Jan 13 17:33:29 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-13 17:34:08.017192 [16516] >> Error entry
+	[Handle: 1908072609328	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Wed Jan 13 17:34:08 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-13 18:19:02.846426 [24816] >> Error entry
+	[Handle: 1908076871632	ConvID: 52648951	Target: SAPQAS	SysID: QAS	SysNr: 00	User: SAPSUPPORT	Mandant: 700	Language: E	Codepage: 4103]
+	RfcCommunicationException: Return Value: 0, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       connection to partner '172.20.1.20:3300' broken
+TIME        Wed Jan 13 18:19:02 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -6
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        5429
+DETAIL      NiIRead: P=172.20.1.20:3300; L=172.17.3.129:59184
+SYSTEM CALL recv
+ERRNO       10054
+ERRNO TEXT  WSAECONNRESET: Connection reset by peer
+COUNTER     4
+
+2021-01-13 18:19:03.165612 [19184] >> Error entry
+	[Handle: 1908074280544	ConvID: 52572131	Target: SAPQAS	SysID: QAS	SysNr: 00	User: SAPSUPPORT	Mandant: 700	Language: E	Codepage: 4103]
+	RfcCommunicationException: Return Value: 0, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       connection to partner '172.20.1.20:3300' broken
+TIME        Wed Jan 13 18:19:02 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -6
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        5429
+DETAIL      NiIRead: P=172.20.1.20:3300; L=172.17.3.129:59120
+SYSTEM CALL recv
+ERRNO       10054
+ERRNO TEXT  WSAECONNRESET: Connection reset by peer
+COUNTER     4
+
+
+**** Log file opened at 2021-01-15 10:23:21.605178 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\Ahmed's Project's\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 123.123.10.12, IPv6 address: fe80::ed1d:f8b8:2386:163b
+
+2021-01-15 10:23:21.712777 [02824] >> Error entry
+	[Handle: 2396519418192	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Fri Jan 15 10:23:21 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-15 10:26:38.906611 [17772] >> Error entry
+	[Handle: 2396508275536	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Fri Jan 15 10:26:38 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10053
+ERRNO TEXT  WSAECONNABORTED: Software caused connection abort
+COUNTER     2
+
+2021-01-15 10:26:38.978397 [19660] >> Error entry
+	[Handle: 2396499753168	ConvID: 97637346	Target: SAPQAS	SysID: QAS	SysNr: 00	User: SAPSUPPORT	Mandant: 700	Language: E	Codepage: 4103]
+	RfcCommunicationException: Return Value: 0, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       connection to partner '172.20.1.20:3300' broken
+TIME        Fri Jan 15 10:26:38 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -6
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        5429
+DETAIL      NiIRead: P=172.20.1.20:3300; L=172.17.3.130:50004
+SYSTEM CALL recv
+ERRNO       10054
+ERRNO TEXT  WSAECONNRESET: Connection reset by peer
+COUNTER     4
+
+
+**** Log file opened at 2021-01-15 13:32:47.005017 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\Ahmed's Project's\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::ed1d:f8b8:2386:163b
+
+2021-01-15 13:32:47.128427 [18300] >> Error entry
+	[Handle: 2652116629776	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Fri Jan 15 13:32:46 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-16 11:58:08.548436 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\Ahmed's Project's\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 123.123.10.4, IPv6 address: fe80::c942:eda4:7452:d5a2
+
+2021-01-16 11:58:08.607031 [19948] >> Error entry
+	[Handle: 1496733910816	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Sat Jan 16 11:58:08 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-16 14:16:16.300979 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\Ahmed's Project's\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 123.123.10.4, IPv6 address: fe80::ed1d:f8b8:2386:163b
+
+2021-01-16 14:16:16.399658 [15732] >> Error entry
+	[Handle: 2810933947968	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Sat Jan 16 14:16:16 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-16 15:19:04.930013 [24760] >> Error entry
+	[Handle: 2810931370560	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Sat Jan 16 15:19:04 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-16 15:33:02.843370 [09876] >> Error entry
+	[Handle: 2810933846176	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Sat Jan 16 15:33:02 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-16 15:33:10.838118 [01932] >> Error entry
+	[Handle: 2810912300832	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Sat Jan 16 15:33:10 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-16 15:33:55.890400 [17220] >> Error entry
+	[Handle: 2810932220208	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Sat Jan 16 15:33:55 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-16 15:54:45.408690 [19500] >> Error entry
+	[Handle: 2810931457040	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Sat Jan 16 15:54:45 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-16 15:57:27.404365 [19500] >> Error entry
+	[Handle: 2810931457040	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Sat Jan 16 15:57:27 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     4
+
+
+**** Log file opened at 2021-01-16 17:59:47.441257 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\Ahmed's Project's\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::ed1d:f8b8:2386:163b
+
+2021-01-16 17:59:47.556477 [06640] >> Error entry
+	[Handle: 2333817583456	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Sat Jan 16 17:59:47 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-19 13:02:29.891165 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::ed1d:f8b8:2386:163b
+
+2021-01-19 13:02:30.000520 [11128] >> Error entry
+	[Handle: 2282489361504	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Tue Jan 19 13:02:29 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-19 14:46:48.684635 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::ed1d:f8b8:2386:163b
+
+2021-01-19 14:46:48.780132 [07596] >> Error entry
+	[Handle: 2619849554880	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Tue Jan 19 14:46:48 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-19 15:06:14.157772 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::ed1d:f8b8:2386:163b
+
+2021-01-19 15:06:14.282870 [18164] >> Error entry
+	[Handle: 2055023769328	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Tue Jan 19 15:06:14 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-19 18:27:12.343505 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::ed1d:f8b8:2386:163b
+
+2021-01-19 18:27:12.485931 [25940] >> Error entry
+	[Handle: 2287365067776	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Tue Jan 19 18:27:12 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-20 17:16:35.320811 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::c942:eda4:7452:d5a2
+
+2021-01-20 17:16:35.416884 [23604] >> Error entry
+	[Handle: 1836737771200	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Wed Jan 20 17:16:35 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-21 10:48:56.614522 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::ed1d:f8b8:2386:163b
+
+2021-01-21 10:48:56.712523 [18308] >> Error entry
+	[Handle: 1937557703824	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Thu Jan 21 10:48:56 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-21 10:50:48.023268 [17176] >> Error entry
+	[Handle: 1937559132976	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Thu Jan 21 10:50:48 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-21 10:52:51.586118 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::ed1d:f8b8:2386:163b
+
+2021-01-21 10:52:51.687118 [16732] >> Error entry
+	[Handle: 2018203311584	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Thu Jan 21 10:52:51 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-21 10:56:01.928290 [17400] >> Error entry
+	[Handle: 2018192731056	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Thu Jan 21 10:56:01 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-21 10:56:15.475294 [08604] >> Error entry
+	[Handle: 2018192208528	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Thu Jan 21 10:56:15 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-21 10:57:42.980746 [01256] >> Error entry
+	[Handle: 2018204225392	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Thu Jan 21 10:57:42 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-21 10:59:03.439661 [05888] >> Error entry
+	[Handle: 2018203979728	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Thu Jan 21 10:59:03 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-21 11:04:29.241812 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::ed1d:f8b8:2386:163b
+
+2021-01-21 11:04:29.343760 [24196] >> Error entry
+	[Handle: 2505005957616	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Thu Jan 21 11:04:29 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-21 11:05:54.196654 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::ed1d:f8b8:2386:163b
+
+2021-01-21 11:05:54.196734 [25756] >> Error entry
+	[Handle: 2009529276368	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Thu Jan 21 11:05:54 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-21 11:11:57.332341 [06168] >> Error entry
+	[Handle: 2009529701968	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Thu Jan 21 11:11:57 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-21 11:14:31.782380 [12404] >> Error entry
+	[Handle: 2009529701968	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Thu Jan 21 11:14:31 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-21 11:14:41.604127 [09400] >> Error entry
+	[Handle: 2009532485472	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Thu Jan 21 11:14:41 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-21 14:00:38.557744 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::c942:eda4:7452:d5a2
+
+2021-01-21 14:00:38.569887 [14664] >> Error entry
+	[Handle: 1885453020528	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Thu Jan 21 14:00:38 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-21 14:01:08.280713 [11032] >> Error entry
+	[Handle: 1885457231184	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Thu Jan 21 14:01:08 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-21 14:05:13.542232 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::ed1d:f8b8:2386:163b
+
+2021-01-21 14:05:13.652008 [19648] >> Error entry
+	[Handle: 2024191540016	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Thu Jan 21 14:05:13 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-21 14:07:33.882731 [19972] >> Error entry
+	[Handle: 2024210691024	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Thu Jan 21 14:07:33 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-21 14:14:34.588949 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::ed1d:f8b8:2386:163b
+
+2021-01-21 14:14:34.693984 [25680] >> Error entry
+	[Handle: 1771436498032	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Thu Jan 21 14:14:34 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-21 14:25:46.524919 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::c942:eda4:7452:d5a2
+
+2021-01-21 14:25:46.627655 [20152] >> Error entry
+	[Handle: 1957337591392	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Thu Jan 21 14:25:46 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-23 11:07:21.317400 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::c942:eda4:7452:d5a2
+
+2021-01-23 11:07:21.416503 [10312] >> Error entry
+	[Handle: 2106886745216	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.20:3300' not reached
+TIME        Sat Jan 23 11:07:21 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.20:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-23 14:19:51.776133 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::c942:eda4:7452:d5a2
+
+2021-01-23 14:19:51.789759 [26900] >> Error entry
+	[Handle: 2113326203008	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Sat Jan 23 14:19:51 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-23 14:20:53.812413 [03692] >> Error entry
+	[Handle: 2113326415488	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Sat Jan 23 14:20:53 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-23 14:21:20.224527 [26796] >> Error entry
+	[Handle: 2113326431120	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Sat Jan 23 14:21:20 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-23 14:21:32.918537 [19744] >> Error entry
+	[Handle: 2113321840080	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Sat Jan 23 14:21:32 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-01-23 14:24:05.212041 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::c942:eda4:7452:d5a2
+
+2021-01-23 14:24:05.319713 [17736] >> Error entry
+	[Handle: 2748670238624	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Sat Jan 23 14:24:05 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-23 14:24:57.598446 [17808] >> Error entry
+	[Handle: 2748667719328	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Sat Jan 23 14:24:57 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-23 14:25:39.918765 [27428] >> Error entry
+	[Handle: 2748650344704	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Sat Jan 23 14:25:39 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-23 14:26:05.072910 [17808] >> Error entry
+	[Handle: 2748659497760	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Sat Jan 23 14:26:05 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     4
+
+2021-01-23 14:26:15.251149 [17736] >> Error entry
+	[Handle: 2748659399168	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Sat Jan 23 14:26:15 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     4
+
+2021-01-23 14:27:03.303346 [22636] >> Error entry
+	[Handle: 2748658070720	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Sat Jan 23 14:27:03 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-23 14:27:11.786110 [15368] >> Error entry
+	[Handle: 2748674251952	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Sat Jan 23 14:27:11 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-23 14:27:17.587073 [01372] >> Error entry
+	[Handle: 2748668580240	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Sat Jan 23 14:27:17 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-23 14:27:42.197692 [27872] >> Error entry
+	[Handle: 2748660904432	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Sat Jan 23 14:27:42 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-01-23 14:27:50.749972 [15368] >> Error entry
+	[Handle: 2748671241936	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Sat Jan 23 14:27:50 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     4
+
+2021-01-23 14:28:11.684402 [27872] >> Error entry
+	[Handle: 2748674251952	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Sat Jan 23 14:28:11 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     4
+
+
+**** Log file opened at 2021-01-30 10:06:25.573833 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 192.168.1.132, IPv6 address: fe80::ed1d:f8b8:2386:163b
+
+2021-01-30 10:06:25.574643 [11776] >> Error entry
+	[Handle: 1945297925808	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Sat Jan 30 10:06:25 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-02-18 17:54:03.996052 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: E:\AHMED\Customerportal\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 4x AMD64 Level 6 (Mod 42 Step 7), Operating_system: Windows NT 10.0
+ Hostname: ACER-ASPIRE, IP address: 123.123.10.21, IPv6 address: fe80::1855:d468:8a00:a935
+
+2021-02-18 17:54:03.996495 [18920] >> Error entry
+	[Handle: 1894731439888	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host ACER-ASPIRE with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Thu Feb 18 17:54:03 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-02-19 14:58:26.325569 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: E:\AHMED\Customerportal\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 4x AMD64 Level 6 (Mod 42 Step 7), Operating_system: Windows NT 10.0
+ Hostname: ACER-ASPIRE, IP address: 10.212.134.119, IPv6 address: fe80::1855:d468:8a00:a935
+
+2021-02-19 14:58:26.326299 [12388] >> Error entry
+	[Handle: 1382997074432	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host ACER-ASPIRE with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Fri Feb 19 14:58:26 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+
+**** Log file opened at 2021-06-08 13:23:44.901797 UTC+05:30 (India Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: D:\AhmedProject\CustomerPortal\CustomerPortal_WebAPI\CustomerPortalWebApi, Program: CustomerPortalWebApi
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 140 Step 1), Operating_system: Windows NT 10.0
+ Hostname: LAPTOP-049EE7G7, IP address: 123.123.10.17, IPv6 address: fe80::b936:8d40:ccc6:5e25
+
+2021-06-08 13:23:45.001669 [22640] >> Error entry
+	[Handle: 2570468120432	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host LAPTOP-049EE7G7 with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Tue Jun 08 13:23:44 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-06-08 13:27:16.942880 [14048] >> Error entry
+	[Handle: 2570466075872	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Tue Jun 08 13:27:16 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2021-06-08 13:30:01.749355 [12492] >> Error entry
+	[Handle: 2570468070400	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '172.20.1.26:3303' not reached
+TIME        Tue Jun 08 13:30:01 2021
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3449
+DETAIL      NiPConnect2: 172.20.1.26:3303
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
