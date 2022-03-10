@@ -12,4 +12,9 @@
         public string Type { get; set; }
         public string Search { get; set; }
     }
+    public class terClass
+    {
+        public string Type { get; set; }
+        public string KeyWord { get; set; }
+    }
 }

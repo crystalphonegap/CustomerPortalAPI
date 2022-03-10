@@ -26,11 +26,27 @@ namespace CustomerPortalWebApi.Controllers
         }
 
         [HttpGet("GetArea/{Type},{KeyWord}")]
-        public IActionResult LoginReport(string Type, string KeyWord)
+        public IActionResult GetArea(string Type, string KeyWord)
         {
             try
             {
                 return Ok(_ILoginReportService.GetArea(Type, KeyWord));
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return BadRequest();
+            }
+        }
+
+     
+
+        [HttpPost("GetAreaNew")]
+        public IActionResult GetAreaNew(terClass model)
+        {
+            try
+            {
+                return Ok(_ILoginReportService.GetArea(model.Type, model.KeyWord));
             }
             catch (Exception ex)
             {

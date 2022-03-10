@@ -88,23 +88,39 @@ namespace CustomerPortalWebApi.Services
         {
             List<CustomerMaster> lstcustomer = new List<CustomerMaster>();
             lstcustomer = GetCustomerDetails(CustomerCode, division);
-            if(lstcustomer.Count>0)
+            if (lstcustomer.Count > 0)
             {
-                var email = new MimeMessage();
-                email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
-                if (string.IsNullOrEmpty( lstcustomer[0].Emailvtxt.Trim()))
+                try
                 {
-                    email.To.Add(MailboxAddress.Parse(lstcustomer[0].Emailvtxt));
-                    email.Subject = "Registration For Customer Portal  of Prism Johnson Company";
-                    var builder = new BodyBuilder();
-                    builder.HtmlBody = GetBody(lstcustomer[0].CustCodevtxt, lstcustomer[0].CustCodevtxt + '-' + lstcustomer[0].CustNamevtxt, lstcustomer[0].AccessTokenKeyvtxt);
-                    email.Body = builder.ToMessageBody();
-                    using var smtp = new SmtpClient();
-                    smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-                    smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
-                    await smtp.SendAsync(email);
-                    smtp.Disconnect(true);
+                    var email = new MimeMessage();
+                    email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
+                    if(lstcustomer[0].Emailvtxt!="" || lstcustomer[0].Emailvtxt != null)
+                    {
+                        if (string.IsNullOrEmpty(lstcustomer[0].Emailvtxt.Trim()))
+                        {
+                            email.To.Add(MailboxAddress.Parse(lstcustomer[0].Emailvtxt));
+                            email.Subject = "Registration For Customer Portal  of Prism Johnson Company";
+                            var builder = new BodyBuilder();
+                            builder.HtmlBody = GetBody(lstcustomer[0].CustCodevtxt, lstcustomer[0].CustCodevtxt + '-' + lstcustomer[0].CustNamevtxt, lstcustomer[0].AccessTokenKeyvtxt);
+                            email.Body = builder.ToMessageBody();
+                            using var smtp = new SmtpClient();
+                            smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
+                            smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+                            await smtp.SendAsync(email);
+                            smtp.Disconnect(true);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                   
                 }
+                catch (Exception)
+                {
+
+                }
+
             }
         }
 
@@ -314,21 +330,21 @@ namespace CustomerPortalWebApi.Services
 
             OTPSuccessfullModel OTPSuccessfullModel = new OTPSuccessfullModel();
 
-                //if (!string.IsNullOrEmpty(mobileno))
-                //{
+            //if (!string.IsNullOrEmpty(mobileno))
+            //{
             Random rd = new Random();
 
-                int num = rd.Next(10000, 99999);
-                var dbPara = new DynamicParameters();
-                dbPara.Add("@P_MobileNumber", "", DbType.String);
-                dbPara.Add("@P_OTP", num, DbType.String);
-                dbPara.Add("@P_TYPE", "INSERT", DbType.String);
-                dbPara.Add("@P_USERCODE", UserCode, DbType.String);
+            int num = rd.Next(10000, 99999);
+            var dbPara = new DynamicParameters();
+            dbPara.Add("@P_MobileNumber", "", DbType.String);
+            dbPara.Add("@P_OTP", num, DbType.String);
+            dbPara.Add("@P_TYPE", "INSERT", DbType.String);
+            dbPara.Add("@P_USERCODE", UserCode, DbType.String);
 
             var data = _customerPortalHelper.GetAll<OTPSuccessfullModel>("[dbo].[PRC_OTP_LOGIN]", dbPara, commandType: CommandType.StoredProcedure);
 
             var client = new HttpClient();
-            var Message = string.Format("Dear User, Please use OTP {0} to Login on Bandhan Dealer Portal. This OTP is valid for 15 min", num);
+            var Message = string.Format("Dear User, Please use OTP {0} to Login on Bandhan Dealer Portal. This OTP is valid for 15 min", num);// Dear User, Please use OTP {0} to Login on Bandhan Dealer Portal. This OTP is valid for 15 min
             var Url = _config["SMS:URL"];
             var urlstring = string.Format(Url, data[0].MOBILE, Message);
             client.BaseAddress = (new Uri(urlstring));
@@ -348,9 +364,9 @@ namespace CustomerPortalWebApi.Services
 
         }
 
-        public UserMaster LoginWithOTP(string mobileno,string OTP,string UseCode )
+        public UserMaster LoginWithOTP(string mobileno, string OTP, string UseCode)
         {
-            
+
             UserMaster UserMaster = new UserMaster();
             var dbPara = new DynamicParameters();
             dbPara.Add("@P_MobileNumber", mobileno, DbType.String);
@@ -361,7 +377,7 @@ namespace CustomerPortalWebApi.Services
             var data = _customerPortalHelper.GetAll<UserMaster>("[dbo].[PRC_OTP_LOGIN]", dbPara, commandType: CommandType.StoredProcedure);
             UserMaster.Branch = data[0].Branch;
             UserMaster.BranchCodevtxt = data[0].BranchCodevtxt;
-            UserMaster.Passwordvtxt = Decrypttxt( data[0].Passwordvtxt);
+            UserMaster.Passwordvtxt = Decrypttxt(data[0].Passwordvtxt);
             UserMaster.Idbint = data[0].Idbint;
             UserMaster.UserNametxt = data[0].UserNametxt;
             UserMaster.UserTypetxt = data[0].UserTypetxt;
