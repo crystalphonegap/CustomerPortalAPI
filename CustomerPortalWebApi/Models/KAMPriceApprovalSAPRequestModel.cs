@@ -38,4 +38,14 @@ namespace CustomerPortalWebApi.Models
         public string TTE { get; set; }
 
     }
+
+
+    public class PostDataModel
+    {
+
+        public string R_KUNNR { get; set; }
+        public string FDAT { get; set; }
+        public string TDAT { get; set; }
+
+    }
 }

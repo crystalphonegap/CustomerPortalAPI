@@ -2,11 +2,15 @@
 using CustomerPortalWebApi.Models;
 using Dapper;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using SapNwRfc;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -153,77 +157,207 @@ namespace CustomerPortalWebApi.Services
             #endregion using dapper
         }
 
+
         public long GetLedgerFromRFC(string customercode, string fromdate, string todate)
         {
-            //string connectionString = "AppServerHost = 172.20.1.20; SystemNumber = 00; User = SAPSUPPORT; Password = Crystal@20#; Client = 700; Language = EN; PoolSize = 5; Trace = 3";
-            try
+
+            DataTable dtHeader = new DataTable();
+            DataTable dtDetails = new DataTable();
+            SAPLedgerClass SAPLedgerClass = new SAPLedgerClass();
+
+            InvoiceDownloadModal model = new InvoiceDownloadModal();
+            LadgerDataModel LadgerModel = new LadgerDataModel();
+            LadgerModel.R_KUNNR = customercode;
+            LadgerModel.FDAT = fromdate;
+            LadgerModel.TDAT = todate;
+
+            var HeaderURL = _config["InvoiceSAP:ladgerH"];
+            var DetailsURL = _config["InvoiceSAP:ladgerD"];
+            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(HeaderURL);
+            httpRequest.Method = "POST";
+
+            var plainBasicAuthBytes = System.Text.Encoding.UTF8.GetBytes(_config["InvoiceSAP:LadgerUsername"] + ":" + _config["InvoiceSAP:LadgerPassword"]);
+            string base64BasicAuth = System.Convert.ToBase64String(plainBasicAuthBytes);
+
+            httpRequest.Headers.Add("ContentType", "application/json");
+            //httpRequest.ContentType = "application/json";
+            httpRequest.Headers.Add("Authorization", "Basic " + base64BasicAuth);
+           
+
+
+            string result2 = JsonConvert.SerializeObject(LadgerModel);
+
+            using (StreamWriter streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
             {
-                using var connection = new SapConnection(_config.GetConnectionString("SAPConnectionString"));
-                connection.Connect();
-
-                if (connection.Ping())
-                {
-                    using ISapFunction someFunction = connection.CreateFunction("ZSDDP_CUSTOMER_LEDGER");
-
-                    DateTime fdate = DateTime.ParseExact(fromdate, "dd-MM-yyyy", null);
-                    DateTime tdate = DateTime.ParseExact(todate, "dd-MM-yyyy", null);
-                    DateTime startdate = Convert.ToDateTime(fdate);
-                    DateTime enddate = Convert.ToDateTime(tdate);
-                    var resultData = someFunction.Invoke<SAPLedgerClass>(new SAPLedgerRequest { KUNNRs = customercode, FDATs = startdate, TDATs = enddate });
-
-                    var result = resultData.LEDGER_DETAIL.ToArray();
-                    var result1 = resultData.LEDGER_HEADER.ToArray();
-
-                    if (result != null && result1 != null)
-                    {
-                        connection.Disconnect();
-                        long rt = 0;
-                        DeleteLedger(customercode);
-                        InsertOpeningBalnce(Convert.ToDecimal(result1[0].DMBTR), customercode);
-                        for (int I = 0; I < result.Length; I++)
-                        {
-                            rt = InsertLedger(result[I], customercode);
-                            rt = 2;
-                        }
-                        return rt;
-                    }
-                    else
-                    {
-                        return 0;
-                    }
-                }
-                else
-                {
-                    return 1;
-                }
+                streamWriter.Write(result2);
             }
-            catch (Exception ex)
+
+           
+
+            HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+            using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
-                _ILogger.Log(ex);
-                string result = "";
+                //change on live
+                string result = streamReader.ReadToEnd();
 
-                string wronginput = "SAP RFC Error: RFC_ABAP_EXCEPTION with message";
-                string connectionFailed = "SAP RFC Error";
-                for (int i = 0; i < wronginput.Length; i++)
-                {
-                    result += ex.Message[i];
-                }
-                if (result == wronginput)
-                {
-                    return 4;
-                }
-                result = "";
-                for (int i = 0; i < connectionFailed.Length; i++)
-                {
-                    result += ex.Message[i];
-                }
-                if (result == connectionFailed)
-                {
-                    return 1;
-                }
-                return 3;
+                ArrayList myArrayList = new ArrayList();
+
+                dtHeader = JsonConvert.DeserializeObject<DataTable>(result);
+
             }
+
+
+
+            HttpWebRequest httpRequestDetails = (HttpWebRequest)WebRequest.Create(DetailsURL);
+            httpRequestDetails.Method = "POST";
+
+
+
+            httpRequestDetails.Headers.Add("ContentType", "application/json");
+            //httpRequest.ContentType = "application/json";
+            httpRequestDetails.Headers.Add("Authorization", "Basic " + base64BasicAuth);
+
+
+
+            string result3 = JsonConvert.SerializeObject(LadgerModel);
+
+            using (StreamWriter streamWriter = new StreamWriter(httpRequestDetails.GetRequestStream()))
+            {
+                streamWriter.Write(result3);
+            }
+
+
+
+            HttpWebResponse httpResponseDetails = (HttpWebResponse)httpRequestDetails.GetResponse();
+            using (StreamReader streamReader = new StreamReader(httpResponseDetails.GetResponseStream()))
+            {
+                //change on live
+                string result = streamReader.ReadToEnd();
+
+          
+
+                dtDetails = JsonConvert.DeserializeObject<DataTable>(result);
+
+            }
+
+
+            if (dtHeader.Rows.Count>0  && dtDetails.Rows.Count > 0)
+            {
+               
+                long rt = 0;
+                DeleteLedger(customercode);
+                InsertOpeningBalnce(Convert.ToDecimal(dtHeader.Rows[0]["DMBTR"].ToString()), customercode);
+                for (int I = 0; I < dtDetails.Rows.Count; I++)
+                {
+                    LEDGER_DETAIL LEDGER_DETAIL = new LEDGER_DETAIL();
+                    LEDGER_DETAIL.BLART = dtDetails.Rows[I]["BLART"].ToString();
+                    LEDGER_DETAIL.WERKS = dtDetails.Rows[I]["WERKS"].ToString();
+                    LEDGER_DETAIL.BELNR = dtDetails.Rows[I]["BELNR"].ToString();
+                    LEDGER_DETAIL.MATWA = dtDetails.Rows[I]["MATWA"].ToString();
+                    LEDGER_DETAIL.FKIMG = dtDetails.Rows[I]["FKIMG"].ToString();
+                    LEDGER_DETAIL.SGTXT = dtDetails.Rows[I]["SGTXT"].ToString();
+                    LEDGER_DETAIL.BLDAT = Convert.ToDateTime(dtDetails.Rows[I]["BLDAT"].ToString());
+                    LEDGER_DETAIL.DMBTRD = dtDetails.Rows[I]["DMBTRD"].ToString();
+                    LEDGER_DETAIL.DMBTRC = dtDetails.Rows[I]["DMBTRC"].ToString();
+                    LEDGER_DETAIL.BAL = dtDetails.Rows[I]["BAL"].ToString();
+                    LEDGER_DETAIL.BUDAT = Convert.ToDateTime(dtDetails.Rows[I]["BUDAT"].ToString());
+
+
+                    rt = InsertLedger(LEDGER_DETAIL, customercode);
+                    rt = 2;
+                }
+                return rt;
+            }
+            else
+            {
+                return 0;
+            }
+
+
+
+            //HttpResponseMessage responsePost = client.PostAsJsonAsync(client.BaseAddress.ToString(), LadgerModel);
+            //if (responsePost.IsSuccessStatusCode)
+            //{
+            //    //return responsePost.Content.ReadAsStringAsync().ContinueWith(task => task.Result).Result;
+            //}
+            //else
+            //{
+            //    return 0;
+            //}
+            return 0;
         }
+
+        //public long GetLedgerFromRFC(string customercode, string fromdate, string todate)
+        //{
+        //    //string connectionString = "AppServerHost = 172.20.1.20; SystemNumber = 00; User = SAPSUPPORT; Password = Crystal@20#; Client = 700; Language = EN; PoolSize = 5; Trace = 3";
+        //    try
+        //    {
+        //        using var connection = new SapConnection(_config.GetConnectionString("SAPConnectionString"));
+        //        connection.Connect();
+
+        //        if (connection.Ping())
+        //        {
+        //            using ISapFunction someFunction = connection.CreateFunction("ZSDDP_CUSTOMER_LEDGER");
+
+        //            DateTime fdate = DateTime.ParseExact(fromdate, "dd-MM-yyyy", null);
+        //            DateTime tdate = DateTime.ParseExact(todate, "dd-MM-yyyy", null);
+        //            DateTime startdate = Convert.ToDateTime(fdate);
+        //            DateTime enddate = Convert.ToDateTime(tdate);
+        //            var resultData = someFunction.Invoke<SAPLedgerClass>(new SAPLedgerRequest { KUNNRs = customercode, FDATs = startdate, TDATs = enddate });
+
+        //            var result = resultData.LEDGER_DETAIL.ToArray();
+        //            var result1 = resultData.LEDGER_HEADER.ToArray();
+
+        //            if (result != null && result1 != null)
+        //            {
+        //                connection.Disconnect();
+        //                long rt = 0;
+        //                DeleteLedger(customercode);
+        //                InsertOpeningBalnce(Convert.ToDecimal(result1[0].DMBTR), customercode);
+        //                for (int I = 0; I < result.Length; I++)
+        //                {
+        //                    rt = InsertLedger(result[I], customercode);
+        //                    rt = 2;
+        //                }
+        //                return rt;
+        //            }
+        //            else
+        //            {
+        //                return 0;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            return 1;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _ILogger.Log(ex);
+        //        string result = "";
+
+        //        string wronginput = "SAP RFC Error: RFC_ABAP_EXCEPTION with message";
+        //        string connectionFailed = "SAP RFC Error";
+        //        for (int i = 0; i < wronginput.Length; i++)
+        //        {
+        //            result += ex.Message[i];
+        //        }
+        //        if (result == wronginput)
+        //        {
+        //            return 4;
+        //        }
+        //        result = "";
+        //        for (int i = 0; i < connectionFailed.Length; i++)
+        //        {
+        //            result += ex.Message[i];
+        //        }
+        //        if (result == connectionFailed)
+        //        {
+        //            return 1;
+        //        }
+        //        return 3;
+        //    }
+        //}
 
         public long InsertOutstanding(ZCUSTAGES model)
         {
@@ -447,7 +581,7 @@ namespace CustomerPortalWebApi.Services
             dbPara.Add("Quantitydcl", 0, DbType.Decimal);
             dbPara.Add("DocumentTypevtxt", "Opening Balance", DbType.String);
             dbPara.Add("TDSdcl", 0, DbType.Decimal);
-            dbPara.Add("ItemDescvtxt","", DbType.String);
+            dbPara.Add("ItemDescvtxt", "", DbType.String);
             dbPara.Add("Balancedcl", amt, DbType.Decimal);
 
             #region using dapper
@@ -599,22 +733,30 @@ namespace CustomerPortalWebApi.Services
 
         public async Task<KAMPriceApprovalSAPResponseModel> KAMFirstRequestPriceApproval(KAMPriceApprovalSAPRequestModel model)
         {
+
+            //PostDataModel PostDataModel = new PostDataModel();
+
+            //PostDataModel.R_KUNNR = "002D000048";
+            //PostDataModel.FDAT = "20220101";
+            //PostDataModel.TDAT = "20220101";
             var client = new HttpClient();
 
             client.BaseAddress = (new Uri(_config["InvoiceSAP:kamurl"]));
             var plainBasicAuthBytes = System.Text.Encoding.UTF8.GetBytes(_config["InvoiceSAP:kamuserName"] + ":" + _config["InvoiceSAP:kampassword"]);
-            var base64BasicAuth = System.Convert.ToBase64String(plainBasicAuthBytes);
+            var base64BasicAuth = "cGNsYWJhcDA0OlBtYXlAMjAyMg==";// System.Convert.ToBase64String(plainBasicAuthBytes);
 
             client.DefaultRequestHeaders.Add("ContentType", "application/json");
             client.DefaultRequestHeaders.Add("Authorization", "Basic " + base64BasicAuth);
 
+            //cGNsYWJhcDA0OlBtYXlAMjAyMg==
             HttpResponseMessage responsePost = await client.PostAsJsonAsync(client.BaseAddress.ToString(), model);
+          //  HttpResponseMessage responsePost = await client.PostAsJsonAsync(client.BaseAddress.ToString(), PostDataModel);
             if (responsePost.IsSuccessStatusCode)
             {
-                string str= responsePost.Content.ReadAsStringAsync().ContinueWith(task => task.Result).Result;
-                str = str.Replace("[","");
+                string str = responsePost.Content.ReadAsStringAsync().ContinueWith(task => task.Result).Result;
+                str = str.Replace("[", "");
                 str = str.Replace("]", "");
-                KAMPriceApprovalSAPResponseModel response = JsonSerializer.Deserialize<KAMPriceApprovalSAPResponseModel>(str);
+                KAMPriceApprovalSAPResponseModel response = System.Text.Json.JsonSerializer.Deserialize<KAMPriceApprovalSAPResponseModel>(str);
                 return response;
             }
             else
@@ -640,7 +782,7 @@ namespace CustomerPortalWebApi.Services
                 string str = responsePost.Content.ReadAsStringAsync().ContinueWith(task => task.Result).Result;
                 str = str.Replace("[", "");
                 str = str.Replace("]", "");
-                KAMPriceApprovalSencondSAPResponseModel response = JsonSerializer.Deserialize<KAMPriceApprovalSencondSAPResponseModel>(str);
+                KAMPriceApprovalSencondSAPResponseModel response = System.Text.Json.JsonSerializer.Deserialize<KAMPriceApprovalSencondSAPResponseModel>(str);
                 PriceApprovalModel model1 = new PriceApprovalModel();
                 model1.IDBint = model.IDBint;
                 model1.ApprovalNovtxt = response.APPNO;
@@ -694,12 +836,12 @@ namespace CustomerPortalWebApi.Services
 
         public string InsertCDPayment(CDPaymentModel model)
         {
-            var dbPara = new DynamicParameters(); 
+            var dbPara = new DynamicParameters();
             dbPara.Add("Date", Convert.ToDateTime(model.Date).ToString("MM-dd-yyyy"), DbType.String);
             dbPara.Add("CustomerCodevtxt", model.CustomerCodevtxt, DbType.String);
             dbPara.Add("Quantitydcl", model.Quantitydcl, DbType.String);
             dbPara.Add("AdvanceCDdcl", model.AdvanceCDdcl, DbType.Decimal);
-            dbPara.Add("DebitNotedcl", model.DebitNotedcl, DbType.String); 
+            dbPara.Add("DebitNotedcl", model.DebitNotedcl, DbType.String);
             #region using dapper
 
             var data = _customerPortalHelper.Insert<string>("[dbo].[uspInsertCDPayment]",
