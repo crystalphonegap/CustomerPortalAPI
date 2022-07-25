@@ -78,7 +78,7 @@ namespace CustomerPortalWebApi.Controllers
 
         [HttpGet("GetShipTo/{CustomerCode}")]
         public IActionResult GetShipTo(string CustomerCode)
-        {
+     {
             try
             {
                 string Token = Request.Headers["Authorization"];

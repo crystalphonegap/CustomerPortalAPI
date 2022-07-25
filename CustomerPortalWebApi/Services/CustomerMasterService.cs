@@ -2,19 +2,28 @@
 using CustomerPortalWebApi.Interface;
 using CustomerPortalWebApi.Models;
 using Dapper;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using SapNwRfc;
+using System.Collections;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace CustomerPortalWebApi.Services
 {
     public class CustomerMasterService : ICustomerMasterService
     {
         private readonly ICustomerPortalHelper _customerPortalHelper;
+        private readonly IConfiguration _config;
 
         string ICustomerMasterService.EditProfile(UserMaster UserMaster)
         {
@@ -30,9 +39,10 @@ namespace CustomerPortalWebApi.Services
             return data;
         }
 
-        public CustomerMasterService(ICustomerPortalHelper customerPortalHelper)
+        public CustomerMasterService(ICustomerPortalHelper customerPortalHelper, IConfiguration config)
         {
             _customerPortalHelper = customerPortalHelper;
+            _config = config;
         }
 
         public List<CustomerMaster> GetCustomerMaster(string Division, int pageNo, int pageSize, string KeyWord)
@@ -97,18 +107,70 @@ namespace CustomerPortalWebApi.Services
 
         public List<ShipToModel> GetShipTo(string CustomerCode)
         {
-            var dbPara = new DynamicParameters();
-            dbPara.Add("customercode", CustomerCode, DbType.String);
-            var data = _customerPortalHelper.GetAll<ShipToModel>("[dbo].[uspviewShipToByCustomerCode]", dbPara, commandType: CommandType.StoredProcedure);
 
-            if (data != null)
+            List<ShipToModel> ShipToModel = new List<ShipToModel>();
+
+            List<CosigneResponseModel> CosigneResponseModel = new List<CosigneResponseModel>();
+            KAMConsigne LadgerModel = new KAMConsigne();
+            LadgerModel.R_KUNNR =  CustomerCode;//"009G001278";//
+
+            var ConsigneUrl = _config["InvoiceSAP:Consigne"];
+
+
+            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(ConsigneUrl);
+            httpRequest.Method = "POST";
+
+            var plainBasicAuthBytes = System.Text.Encoding.UTF8.GetBytes(_config["InvoiceSAP:LadgerUsername"] + ":" + _config["InvoiceSAP:LadgerPassword"]);
+            string base64BasicAuth = System.Convert.ToBase64String(plainBasicAuthBytes);
+
+            httpRequest.Headers.Add("ContentType", "application/json");
+            //httpRequest.ContentType = "application/json";
+            httpRequest.Headers.Add("Authorization", "Basic " + base64BasicAuth);
+
+
+
+            string result2 = JsonConvert.SerializeObject(LadgerModel);
+
+            using (StreamWriter streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
             {
-                return data.ToList();
+                streamWriter.Write(result2);
             }
-            else
+
+
+
+            HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+            using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
-                return null;
+                //change on live
+                string result = streamReader.ReadToEnd();
+
+                CosigneResponseModel = JsonConvert.DeserializeObject<List<CosigneResponseModel>>(result);
+
+                
+                for(int i=0;i< CosigneResponseModel.Count - 1; i++)
+                {
+                    ShipToModel ShipToModel2 = new ShipToModel();
+                    ShipToModel2.ShipToCodevtxt = CosigneResponseModel[i].KUNN2;
+                    ShipToModel2.ShipToNamevtxt = CosigneResponseModel[i].NAME1;
+                    ShipToModel.Add(ShipToModel2);
+                }
+                
+
             }
+            return ShipToModel;
+
+            //var dbPara = new DynamicParameters();
+            //dbPara.Add("customercode", CustomerCode, DbType.String);
+            //var data = _customerPortalHelper.GetAll<ShipToModel>("[dbo].[uspviewShipToByCustomerCode]", dbPara, commandType: CommandType.StoredProcedure);
+
+            //if (data != null)
+            //{
+            //    return data.ToList();
+            //}
+            //else
+            //{
+            //    return null;
+            //}
         }
 
         public long CustomerCount(string Division)
@@ -116,7 +178,7 @@ namespace CustomerPortalWebApi.Services
             var dbPara = new DynamicParameters();
             dbPara.Add("Division", Division, DbType.String);
             var data = _customerPortalHelper.GetAll<Count>("[dbo].[uspviewgetAllCustomerCount]", dbPara, commandType: CommandType.StoredProcedure);
-           
+
             if (data != null)
             {
                 return Convert.ToInt64(data[0].ListCount);
@@ -380,7 +442,7 @@ namespace CustomerPortalWebApi.Services
             var data = _customerPortalHelper.GetAll<CustomerLedger>("[dbo].[uspviewCustomerLedgerCount]",
                             dbPara,
                             commandType: CommandType.StoredProcedure);
-            
+
             if (data != null)
             {
                 return Convert.ToInt64(data.Count);
@@ -475,10 +537,10 @@ namespace CustomerPortalWebApi.Services
             }
         }
 
-         
 
 
-        public int  UploadMason (MasonModel Model)
+
+        public int UploadMason(MasonModel Model)
         {
             var dbPara = new DynamicParameters();
             dbPara.Add("Idbint", Model.Idbint, DbType.Int32);
@@ -489,7 +551,7 @@ namespace CustomerPortalWebApi.Services
             var data = _customerPortalHelper.Get<int>("[dbo].[uspInsertUpdateMason]", dbPara, commandType: CommandType.StoredProcedure);
             return data;
         }
-        public List<MasonModel> GetTempMason(int PageNo, int PageSize,string keyword)
+        public List<MasonModel> GetTempMason(int PageNo, int PageSize, string keyword)
         {
             var dbPara = new DynamicParameters();
             dbPara.Add("PageNo", PageNo, DbType.Int32);

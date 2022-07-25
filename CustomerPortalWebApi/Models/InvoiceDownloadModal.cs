@@ -11,4 +11,8 @@
         public string FDAT { get; set; }
         public string TDAT { get; set; }
     }
+    public class KAMConsigne
+    {
+        public string R_KUNNR { get; set; }
+    }
 }

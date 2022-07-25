@@ -167,9 +167,15 @@ namespace CustomerPortalWebApi.Services
 
             InvoiceDownloadModal model = new InvoiceDownloadModal();
             LadgerDataModel LadgerModel = new LadgerDataModel();
+           
+
+            string[] FDate = fromdate.Split('-');
+            string[] Todate = todate.Split('-');
+            string FFdate = FDate[2] + "" + FDate[1] + "" + FDate[0];
+            string TTodate = Todate[2] + "" + Todate[1] + "" + Todate[0];
             LadgerModel.R_KUNNR = customercode;
-            LadgerModel.FDAT = fromdate;
-            LadgerModel.TDAT = todate;
+            LadgerModel.FDAT = FFdate;//Convert.ToDateTime(fromdate).ToString("yyyyMMdd");
+            LadgerModel.TDAT = TTodate;// Convert.ToDateTime(todate).ToString("yyyyMMdd"); 
 
             var HeaderURL = _config["InvoiceSAP:ladgerH"];
             var DetailsURL = _config["InvoiceSAP:ladgerD"];
@@ -272,18 +278,6 @@ namespace CustomerPortalWebApi.Services
             {
                 return 0;
             }
-
-
-
-            //HttpResponseMessage responsePost = client.PostAsJsonAsync(client.BaseAddress.ToString(), LadgerModel);
-            //if (responsePost.IsSuccessStatusCode)
-            //{
-            //    //return responsePost.Content.ReadAsStringAsync().ContinueWith(task => task.Result).Result;
-            //}
-            //else
-            //{
-            //    return 0;
-            //}
             return 0;
         }
 
