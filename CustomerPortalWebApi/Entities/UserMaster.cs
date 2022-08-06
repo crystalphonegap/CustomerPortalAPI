@@ -42,4 +42,10 @@ namespace CustomerPortalWebApi.Entities
         public string ZoneCodevtxt { get; set; }
         public string ZoneDescriptionvtxt { get; set; }
     }
+
+    public class SMSAuthResponse
+    {
+        public string token { get; set; }
+        public string expiryDate { get; set; }
+    }
 }

@@ -8,11 +8,13 @@ using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using MimeKit;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
@@ -90,6 +92,17 @@ namespace CustomerPortalWebApi.Services
             lstcustomer = GetCustomerDetails(CustomerCode, division);
             if (lstcustomer.Count > 0)
             {
+                SMSAuthResponse SMSAuthResponse = SMSAuthcheck();
+                if (SMSAuthResponse.token != "")
+                {
+                    UploadSendSMSTo(SMSAuthResponse, lstcustomer[0].TelNumber1vtxt, lstcustomer[0].CustCodevtxt, lstcustomer[0].AccessTokenKeyvtxt);
+                    
+                }
+                else
+                {
+
+                }
+
                 try
                 {
                     var email = new MimeMessage();
@@ -254,39 +267,57 @@ namespace CustomerPortalWebApi.Services
 
         public async Task<string> SendEmailForForgetPassword(string custcode, string custname, string EmailID, string ResetTokenvtxt, string mobileno)
         {
+            SMSAuthResponse SMSAuthResponse = SMSAuthcheck();
+            string Token = "";
+            if(SMSAuthResponse.token != "")
+            {
+                Token = SendSMSTo(SMSAuthResponse, mobileno, custcode);
+            }
+            else
+            {
+
+            }
             var returndata = "";
             Boolean SMS = false;
             Boolean Mail = false;
             var email = new MimeMessage();
             email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
-            if (!string.IsNullOrEmpty(mobileno))
-            {
-                var client = new HttpClient();
-                var Message = string.Format("Dear User, Please use OTP {0} to reset your password of Bandhan Dealer Portal. This OTP is valid for 15 min", ResetTokenvtxt);
-                var Url = _config["SMS:URL"];
-                var urlstring = string.Format(Url, mobileno, Message);
-                client.BaseAddress = (new Uri(urlstring));
-                client.DefaultRequestHeaders.Add("ContentType", "application/json");
-                HttpResponseMessage responsePost = await client.GetAsync(client.BaseAddress.ToString());
-                //{http://bhashsms.com/api/sendmsg.php?user=prismcement&pass=Pcl@2017&sender=PRISMD&phone=8450929346&text=Dear User, Please use OTP RS651525 to reset your password of Bandhan Dealer Portal. This OTP is valid for 15 min&priority=ndnd&stype=normal}
-                if (responsePost.IsSuccessStatusCode)
-                {
-                    SMS = true;
-                }
-            }
+            //if (!string.IsNullOrEmpty(mobileno))
+            //{
+            //    var client = new HttpClient();
+            //    var Message = string.Format("Dear User, Please use OTP {0} to reset your password of Bandhan Dealer Portal. This OTP is valid for 15 min", ResetTokenvtxt);
+            //    var Url = _config["SMS:URL"];
+            //    var urlstring = string.Format(Url, mobileno, Message);
+            //    client.BaseAddress = (new Uri(urlstring));
+            //    client.DefaultRequestHeaders.Add("ContentType", "application/json");
+            //    HttpResponseMessage responsePost = await client.GetAsync(client.BaseAddress.ToString());
+            //    //{http://bhashsms.com/api/sendmsg.php?user=prismcement&pass=Pcl@2017&sender=PRISMD&phone=8450929346&text=Dear User, Please use OTP RS651525 to reset your password of Bandhan Dealer Portal. This OTP is valid for 15 min&priority=ndnd&stype=normal}
+            //    if (responsePost.IsSuccessStatusCode)
+            //    {
+            //        SMS = true;
+            //    }
+            //}
             if (!string.IsNullOrEmpty(EmailID))
             {
-                email.To.Add(MailboxAddress.Parse(EmailID));
-                email.Subject = "Reset Password For Customer Portal  of Prism Johnson Company";
-                var builder = new BodyBuilder();
-                builder.HtmlBody = GetBodyForResetPassword(custcode, custcode + '-' + custname, ResetTokenvtxt);
-                email.Body = builder.ToMessageBody();
-                using var smtp = new SmtpClient();
-                smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-                smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
-                await smtp.SendAsync(email);
-                smtp.Disconnect(true);
-                Mail = true;
+                try
+                {
+                    email.To.Add(MailboxAddress.Parse(EmailID));
+                    email.Subject = "Reset Password For Customer Portal  of Prism Johnson Company";
+                    var builder = new BodyBuilder();
+                    builder.HtmlBody = GetBodyForResetPassword(custcode, custcode + '-' + custname, Token);
+                    email.Body = builder.ToMessageBody();
+                    using var smtp = new SmtpClient();
+                    smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
+                    smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+                    await smtp.SendAsync(email);
+                    smtp.Disconnect(true);
+                    Mail = true;
+                }
+                catch (Exception)
+                {
+
+                }
+              
             }
             if (SMS == true && Mail == true)
             {
@@ -299,6 +330,10 @@ namespace CustomerPortalWebApi.Services
             else if (SMS == true && Mail == false)
             {
                 returndata = "SMS Send";
+            }
+            else
+            {
+                returndata = "SMS & Mail Send";
             }
 
             return returndata;
@@ -408,5 +443,93 @@ namespace CustomerPortalWebApi.Services
             }
             return cipherText;
         }
+
+        public SMSAuthResponse SMSAuthcheck()
+        {
+            SMSAuthResponse SMSAuthResponse = new SMSAuthResponse();
+            var HeaderURL = _config["SendSMS:TokenUrl"];
+            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(HeaderURL);
+            httpRequest.Method = "POST";
+
+            var plainBasicAuthBytes = System.Text.Encoding.UTF8.GetBytes(_config["SendSMS:SMSUserName"] + ":" + _config["SendSMS:SMSPassword"]);
+            string base64BasicAuth = System.Convert.ToBase64String(plainBasicAuthBytes);
+
+            httpRequest.Headers.Add("ContentType", "application/json");
+            //httpRequest.ContentType = "application/json";
+            httpRequest.Headers.Add("Authorization", "Basic " + base64BasicAuth);
+
+
+            HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+            using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                //change on live
+                string result = streamReader.ReadToEnd();
+                SMSAuthResponse= JsonConvert.DeserializeObject<SMSAuthResponse>(result);
+
+            }
+
+            return SMSAuthResponse;
+        }
+
+        public string SendSMSTo(SMSAuthResponse SMSAuthResponse,string mobileno,string UserCode)
+        {
+            Random rd = new Random();
+            int num = rd.Next(10000, 99999);
+            var dbPara = new DynamicParameters();
+            dbPara.Add("@P_MobileNumber", mobileno, DbType.String);
+            dbPara.Add("@P_OTP", "RS"+num, DbType.String);
+            dbPara.Add("@P_TYPE", "INSERT", DbType.String);
+            dbPara.Add("@P_USERCODE", UserCode, DbType.String);
+
+            var data = _customerPortalHelper.GetAll<OTPSuccessfullModel>("[dbo].[PRC_OTP_LOGIN]", dbPara, commandType: CommandType.StoredProcedure);
+
+            var client = new HttpClient();
+            var HeaderURL = _config["SendSMS:SMSURL"];
+           
+            //var Message = string.Format("Login OTP for Sapney Mason Application is 123456");
+            var Message = string.Format("Dear Member, Your Bandhan verification OTP code is {0} .Prism Cement","RS"+num);
+            var Url = _config["SendSMS:SMSURL"];
+            var urlstring = string.Format(Url, mobileno, Message);
+            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(urlstring);
+            httpRequest.Method = "GET";
+           
+            httpRequest.Headers.Add("Authorization", "Bearer " + SMSAuthResponse.token);
+
+            HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+            using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                //change on live
+                string result = streamReader.ReadToEnd();
+
+            }
+            return "RS"+num.ToString();
+           
+        }
+        public void UploadSendSMSTo(SMSAuthResponse SMSAuthResponse, string mobileno, string UserCode,string Accesstoken)
+        {
+            
+           
+            var client = new HttpClient();
+            var HeaderURL = _config["SendSMS:SMSURL"];
+
+            var Message = string.Format("Dear Member, Your OTP for Bandhan Login is  {0}. Prism Cement", Accesstoken);
+            var Url = _config["SendSMS:SMSURL"];
+            var urlstring = string.Format(Url, mobileno, Message);
+            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(urlstring);
+            httpRequest.Method = "GET";
+            httpRequest.Headers.Add("Authorization", "Bearer " + SMSAuthResponse.token);
+
+
+            HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+            using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                //change on live
+                string result = streamReader.ReadToEnd();
+
+            }
+
+
+        }
+
     }
 }
