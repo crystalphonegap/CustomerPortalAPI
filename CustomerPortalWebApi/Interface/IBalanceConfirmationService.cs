@@ -32,6 +32,9 @@ namespace CustomerPortalWebApi.Interface
 
         Task UpdateCustomerLedgerbalanceconfStatus(LedgerBalanceConfirmationHeader model);
 
+        Task UpdateCustomerLedgerbalanceconfStatusWithAttachments(LedgerBalanceConfirmationHeader model);
+
+        void UpdateCustomerLedgerbalanceconfStatusWithAttachmentsByEmp(LedgerBalanceConfirmationHeader model);
         long UpdateCustomerLedgerbalanceconfDetails(LedgerBalanceConfirmationDetails model);
 
         List<LedgerBalanceConfirmationHeader> GetBalanceConfHeaderListForEmployee(string fromdate, string todate, string status, string usertype, string usercode, int PageNo, int PageSize, string KeyWord);
@@ -55,5 +58,17 @@ namespace CustomerPortalWebApi.Interface
         long InsertBalanceConfLog(LedgerBalanceConfirmationLog model);
 
         List<LedgerBalanceConfirmationLog> GetBalanceConfLog(long HeaderIDbint);
+
+        List<BalConfirmationModel> GetBalanceConfHeaderforRegionalAccountingHead(string usertype, string usercode, string fromdate, string todate, string Region, string Branch, string Territory ,int PageNo, int PageSize);
+
+        long GetBalanceConfHeaderforRegionalAccountingHeadCount(string usertype, string usercode, string fromdate, string todate, string Region, string Branch, string Territory);
+
+        List<LedgerBalanceConfirmationAttachments> GetBalanceConfAttachments(long detailsid);
+
+        LedgerBalanceConfirmationAttachments GetBalanceConfLogAttachmentDownload(long ID);
+
+        List<BalConfirmationActionLogModel> GetBalanceConfirmationActionLog(string usertype, string usercode, string fromdate, string todate, string Region, string Branch, string Territory, int PageNo, int PageSize);
+
+        long GetBalanceConfirmationActionLogCount(string usertype, string usercode, string fromdate, string todate, string Region, string Branch, string Territory);
     }
 }

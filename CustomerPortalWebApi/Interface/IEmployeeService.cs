@@ -20,5 +20,10 @@ namespace CustomerPortalWebApi.Interface
         List<CFSPOustandingListModel> GetCFSPOustingDataList(string usercode, string usertype, string mode);
 
         List<CFSPOustandingListModel> GetDealerListInEmployeeDashboard(string usercode, string usertype, string date, string mode,string Trade,string FillterType);
+
+        List<SalesHierachy> GetSalesHierachyforRAH(string usercode, string usertype, string mode, string search);
+
+
+        List<TargetSalesModel> GetAccountingHeadEmployeeWiseReport(string mode, string code, string fdate, string tdate);
     }
 }

@@ -67,6 +67,16 @@ namespace CustomerPortalWebApi.Helper
             }
         }
 
+
+
+        public int ExecuteTrans(IDbTransaction sqltrans,string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        {
+            using (IDbConnection db = new SqlConnection(_config.GetConnectionString("DatabaseContext")))
+            {
+                return db.Execute(sp, parms, sqltrans,commandType: commandType);
+            }
+        }
+
         public T Insert<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             T result;
@@ -127,6 +137,70 @@ namespace CustomerPortalWebApi.Helper
                             tran.Rollback();
                             throw ex;
                         }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (db.State == ConnectionState.Open)
+                        db.Close();
+                }
+
+                return result;
+            }
+        }
+
+
+        public T InsertTrans<T>(IDbTransaction tran,string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        {
+            T result;
+            using (IDbConnection db = new SqlConnection(_config.GetConnectionString("DatabaseContext")))
+            {
+                try
+                {
+                    try
+                    {
+                        result = db.Query<T>(sp, parms, commandType: commandType, transaction: tran).FirstOrDefault();
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (db.State == ConnectionState.Open)
+                        db.Close();
+                }
+
+                return result;
+            }
+        }
+
+        public T UpdateTrans<T>(IDbTransaction tran,string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        {
+            T result;
+            using (IDbConnection db = new SqlConnection(_config.GetConnectionString("DatabaseContext")))
+            {
+                try
+                {
+                    if (db.State == ConnectionState.Closed)
+                        db.Open();
+                    try
+                    {
+                        result = db.Query<T>(sp, parms, commandType: commandType, transaction: tran).FirstOrDefault();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
                     }
                 }
                 catch (Exception ex)

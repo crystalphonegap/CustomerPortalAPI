@@ -478,6 +478,9 @@ namespace CustomerPortalWebApi.Controllers
             }
         }
 
+
+        
+
         [HttpGet("GetUserPagination/{pageNo},{pageSize}")]
         public IActionResult GetUserPagination(int pageNo, int pageSize)
         {
@@ -618,6 +621,102 @@ namespace CustomerPortalWebApi.Controllers
             }
         }
 
+        //Added for Regional Head
+        [HttpGet("GetRegionalHeadList/{usertype},{usercode},{pageNo},{pageSize},{keyword}")]
+        public IActionResult GetRegionalHeadList(string usertype,string usercode,int pageNo, int pageSize, string keyword)
+        {
+            try
+            {
+                return Ok(_userMasterService.GetRegionalHeadList(usertype,usercode,pageNo, pageSize, keyword));
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return BadRequest();
+            }
+        }
+
+        //Added for Regional Head
+        [HttpGet("GetRegionalHeadListCount/{usertype},{usercode},{keyword}")]
+        public long GetRegionalHeadListCount(string usertype, string usercode, string keyword)
+        {
+            try
+            {
+                return _userMasterService.GetRegionalHeadListCount(usertype,usercode,keyword);
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return 0;
+            }
+        }
+
+        [HttpGet("RegionalHeadListExcelToExcel/{KeyWord}")]
+        public IActionResult RegionalHeadListExcelToExcel(string KeyWord)
+        {
+            try
+            {
+                List<UserMasterModel> userlist = _userMasterService.GetAllRegionalHeadListDownload(KeyWord);
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add("Users");
+                    var currentRow = 1;
+                    var srNo = 1;
+                    worksheet.Cell(currentRow, 1).Value = "Sr No";
+                    worksheet.Cell(currentRow, 2).Value = "User Code";
+                    worksheet.Cell(currentRow, 3).Value = "User Name";
+                    worksheet.Cell(currentRow, 4).Value = "User Type";
+                    worksheet.Cell(currentRow, 5).Value = "Email";
+                    worksheet.Cell(currentRow, 6).Value = "Mobile No";
+                    worksheet.Cell(currentRow, 7).Value = "Password";
+                    worksheet.Cell(currentRow, 8).Value = "Parent Code ";
+                    foreach (var users in userlist)
+                    {
+                        currentRow++;
+                        worksheet.Cell(currentRow, 1).Value = srNo++;
+                        worksheet.Cell(currentRow, 2).Value = users.UserCodetxt;
+                        worksheet.Cell(currentRow, 3).Value = users.UserNametxt;
+                        worksheet.Cell(currentRow, 4).Value = users.UserTypetxt;
+                        worksheet.Cell(currentRow, 5).Value = users.Emailvtxt;
+                        worksheet.Cell(currentRow, 6).Value = users.Mobilevtxt;
+                        worksheet.Cell(currentRow, 7).Value = Decrypttxt(users.Passwordvtxt);
+                        worksheet.Cell(currentRow, 8).Value = users.ParentCodevtxt;
+                    }
+
+                    using (var stream = new MemoryStream())
+                    {
+                        workbook.SaveAs(stream);
+                        var content = stream.ToArray();
+
+                        return File(
+                            content,
+                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                            "UserList.xlsx");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return BadRequest();
+            }
+        }
+
+        //Added for Regional Head
+        [HttpGet("Regions")]
+        public IActionResult Regions()
+        {
+            try
+            {
+                return Ok(_userMasterService.Regions());
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+
         [HttpGet("GetError/{fromdate},{todate},{PageNo},{PageSize},{KeyWord}")]
         public IActionResult GetError(string fromdate, string todate, int PageNo, int PageSize, string KeyWord)
         {
@@ -740,6 +839,9 @@ namespace CustomerPortalWebApi.Controllers
                 return BadRequest();
             }
         }
+
+
+
 
         //use for UserMaster Role HeaderBy Usercode
         [HttpGet("GetUserRolesHeader/{usercode}")]

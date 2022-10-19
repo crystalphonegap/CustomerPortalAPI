@@ -36,6 +36,8 @@ namespace CustomerPortalWebApi.Interface
 
         UserMaster LoginLogs(string UserCode, string UserName, string UserType, string BrowserName, string IpAddress);
 
+        ReagonMaster Regions();
+
         int SaveRefreshToken(string username, string refreshToken);
 
         string GetRefreshToken(string usercode, string reftoken);
@@ -43,6 +45,12 @@ namespace CustomerPortalWebApi.Interface
         int DeleteRefreshToken(string usercode, string token);
 
         List<UserMasterModel> GetAllUserMasterForDivisionalAdminSearch(int PageNo, int PageSize, string KeyWord);
+
+        List<UserMasterModel> GetRegionalHeadList(string usertype, string usercode, int PageNo, int PageSize, string KeyWord);
+
+        long GetRegionalHeadListCount(string usertype, string usercode, string KeyWord);
+
+        List<UserMasterModel> GetAllRegionalHeadListDownload(string KeyWord);
 
         List<UserMasterModel> GetAllUserMasterByParentCode(string status, string CustomerId, int PageNo, int PageSize, string KeyWord);
 

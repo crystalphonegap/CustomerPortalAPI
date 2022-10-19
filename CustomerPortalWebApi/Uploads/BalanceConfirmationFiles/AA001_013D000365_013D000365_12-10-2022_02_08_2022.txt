@@ -1,0 +1,54 @@
+curl --location --request POST 'http://api.petrogenius.com/V1/Login/auth?Ver=1.0' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: ASP.NET_SessionId=aixwnpvpwgsu0roytblnv4hb' \
+--data-raw '{
+ "email":"imrantak@cogxim.com",
+ "password":"@1234"
+}'
+
+
+
+---DayLimit
+
+OutStation	
+
+
+-- field force settlement--
+1.change UI to one day entry from entire month
+
+L-Local
+O-OutStation
+B-OutStation+Local	
+LH-Leaves/Holidays
+
+
+Conveyance Travel
+Transit Amount
+Agent Charges
+Bus/Train Amount - free text box
+
+
+from another resource (DRCP) - every month 6th Scheduler run for DRCP data to TEM
+auto populate from other source and user accept & Reject the 
+
+
+New development
+
+3 - day's deviate send to RA1 for approval
+
+
+Field Emp  - NSM for Approval
+Non Field Emp - RA1 approval 
+
+if local Claim Amount < 15000 - direct ACshier
+> 15000 - required approval from RA1,RA2
+
+
+Employee Grade
+City
+
+
+
+
+
+

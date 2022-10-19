@@ -19,5 +19,7 @@ namespace CustomerPortalWebApi.Models
         public string Remarksvtxt { get; set; }
 
         public string Statusvtxt { get; set; }
+
+        public int AttachmentCount { get; set; }
     }
 }

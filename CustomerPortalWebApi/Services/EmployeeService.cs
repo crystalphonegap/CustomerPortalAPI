@@ -82,6 +82,29 @@ namespace CustomerPortalWebApi.Services
             }
         }
 
+        public List<TargetSalesModel> GetAccountingHeadEmployeeWiseReport(string mode, string code, string fdate,string tdate)
+        {
+            var dbPara = new DynamicParameters();
+            DateTime fromdate = DateTime.ParseExact(fdate, "dd-MM-yyyy", null);
+            DateTime todate = DateTime.ParseExact(tdate, "dd-MM-yyyy", null);
+            dbPara.Add("mode", mode, DbType.String);
+            dbPara.Add("code", code, DbType.String);
+            dbPara.Add("fdate", Convert.ToDateTime(fromdate).ToString("yyyy-MM-dd"), DbType.DateTime);
+            dbPara.Add("tdate", Convert.ToDateTime(todate).ToString("yyyy-MM-dd"), DbType.DateTime);
+            var data = _customerPortalHelper.GetAll<TargetSalesModel>("[dbo].[uspviewAccountingHeadEmployeeWiseReport]",
+                            dbPara,
+                            commandType: CommandType.StoredProcedure);
+
+            if (data != null)
+            {
+                return data.ToList();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public List<TargetSalesModel> GetAreaNameByAreaCode(string mode, string code)
         {
             var dbPara = new DynamicParameters();
@@ -153,6 +176,28 @@ namespace CustomerPortalWebApi.Services
                             dbPara,
                             commandType: CommandType.StoredProcedure);
 
+            if (data != null)
+            {
+                return data.ToList();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+
+        public List<SalesHierachy> GetSalesHierachyforRAH(string usercode, string usertype, string mode,string search)
+        {
+            var dbPara = new DynamicParameters();
+            dbPara.Add("UserType", usertype, DbType.String);
+            dbPara.Add("UserCode", usercode, DbType.String);
+            dbPara.Add("Mode", mode, DbType.String);
+            dbPara.Add("Search", search, DbType.String);
+            var data = _customerPortalHelper.GetAll<SalesHierachy>("[dbo].[USP_GetSalesHierarchyforRCH]",
+                            dbPara,
+                            commandType: CommandType.StoredProcedure);
             if (data != null)
             {
                 return data.ToList();
