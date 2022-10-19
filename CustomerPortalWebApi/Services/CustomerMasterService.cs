@@ -147,7 +147,7 @@ namespace CustomerPortalWebApi.Services
                 CosigneResponseModel = JsonConvert.DeserializeObject<List<CosigneResponseModel>>(result);
 
                 
-                for(int i=0;i< CosigneResponseModel.Count - 1; i++)
+                for(int i=0;i< CosigneResponseModel.Count; i++)
                 {
                     ShipToModel ShipToModel2 = new ShipToModel();
                     ShipToModel2.ShipToCodevtxt = CosigneResponseModel[i].KUNN2;

@@ -84,8 +84,8 @@ namespace CustomerPortalWebApi.Models
         public decimal THAND { get; set; }
         public decimal NHAND { get; set; }
 
-        public decimal TSP { get; set; }
-        public decimal NSP { get; set; }
+        public string TSP { get; set; }
+        public string NSP { get; set; }
 
         public decimal TDISCOUNT { get; set; }
 
