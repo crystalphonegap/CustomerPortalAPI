@@ -354,6 +354,85 @@ namespace CustomerPortalWebApi.Controllers
             }
         }
 
+        [HttpGet("GetBalConfHeaderDataForActionReportDownload/{fromdate},{todate},{usertype},{usercode},{Region},{Branch},{Territory}")]
+        public IActionResult GetBalConfHeaderDataForActionReportDownload(string fromdate, string todate, string usertype, string usercode, string Region, string Branch, string Territory)
+        {
+            try
+            {
+                string Token = Request.Headers["Authorization"];
+                string[] authorize = Token.Split(" ");
+                if (_Checktokenservice.CheckToken(authorize[1].Trim(), usercode))
+                {
+                    List<BalConfirmationActionLogModel> Balconf=_BalanceConfirmationService.GetBalanceConfirmationActionLogDownload(usertype, usercode, fromdate, todate, Region, Branch, Territory);
+                    using (var workbook = new XLWorkbook())
+                    {
+                        var worksheet = workbook.Worksheets.Add("Order");
+                        var currentRow = 1;
+                        var srNo = 1;
+                        worksheet.Cell(currentRow, 1).Value = "Sr No";
+                        worksheet.Cell(currentRow, 2).Value = "Customer Code";
+                        worksheet.Cell(currentRow, 3).Value = "Customer Name";
+                        worksheet.Cell(currentRow, 4).Value = "Request No";
+                        worksheet.Cell(currentRow, 5).Value = "Request Date";
+                        worksheet.Cell(currentRow, 6).Value = "Region Description";
+                        worksheet.Cell(currentRow, 7).Value = "Branch Name";
+                        worksheet.Cell(currentRow, 8).Value = "SalesOffice Name";
+                        worksheet.Cell(currentRow, 9).Value = "Customer Action Date";
+                        worksheet.Cell(currentRow, 10).Value = "Customer Comments";
+                        worksheet.Cell(currentRow, 11).Value = "BM Action Date";
+                        worksheet.Cell(currentRow, 12).Value = "BM Comments";
+                        worksheet.Cell(currentRow, 13).Value = "RM Action Date";
+                        worksheet.Cell(currentRow, 14).Value = "RM Comments";
+                        worksheet.Cell(currentRow, 15).Value = "RMOAccounts Action Date";
+                        worksheet.Cell(currentRow, 16).Value = "RMOAccounts Comments";
+                        worksheet.Cell(currentRow, 17).Value = "CMO Action Date";
+                        worksheet.Cell(currentRow, 18).Value = "CMO Comments";
+                        foreach (var orders in Balconf)
+                        {
+                            currentRow++;
+                            worksheet.Cell(currentRow, 1).Value = srNo++;
+                            worksheet.Cell(currentRow, 2).Value = orders.CustomerCodevtxt;
+                            worksheet.Cell(currentRow, 3).Value = orders.CustNamevtxt;
+                            worksheet.Cell(currentRow, 4).Value = orders.RequestNovtxt;
+                            worksheet.Cell(currentRow, 5).Value = orders.RequestDate;
+                            worksheet.Cell(currentRow, 6).Value = orders.RegionDescriptionvtxt;
+                            worksheet.Cell(currentRow, 7).Value = orders.BranchNamevtxt;
+                            worksheet.Cell(currentRow, 8).Value = orders.SalesOfficeNamevtxt;
+                            worksheet.Cell(currentRow, 9).Value = orders.CustomerDate;
+                            worksheet.Cell(currentRow, 10).Value = orders.CustomerComments;
+                            worksheet.Cell(currentRow, 11).Value = orders.BMDate;
+                            worksheet.Cell(currentRow, 12).Value = orders.BMComments;
+                            worksheet.Cell(currentRow, 13).Value = orders.RMDate;
+                            worksheet.Cell(currentRow, 14).Value = orders.RMComments;
+                            worksheet.Cell(currentRow, 15).Value = orders.RMOAccountsDate;
+                            worksheet.Cell(currentRow, 16).Value = orders.RMOAccountsComments;
+                            worksheet.Cell(currentRow, 17).Value = orders.CMODate;
+                            worksheet.Cell(currentRow, 18).Value = orders.CMOComments;
+                        }
+
+                        using (var stream = new MemoryStream())
+                        {
+                            workbook.SaveAs(stream);
+                            var content = stream.ToArray();
+
+                            return File(
+                                content,
+                                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                "OrderList.xlsx");
+                        }
+                    }
+                }
+                else
+                {
+                    return Ok("Un Authorized User");
+                }
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return BadRequest();
+            }
+        }
 
         //use for Get BalConfHeaderData ForAH Count
         [HttpGet("GetBalConfHeaderDataForAHCount/{usercode}")]
@@ -1167,6 +1246,8 @@ namespace CustomerPortalWebApi.Controllers
                 throw ex;
             }
         }
+
+
 
         //use for download attachments
         [HttpGet("DownloadFileForEmp/{Mode},{ID}")]

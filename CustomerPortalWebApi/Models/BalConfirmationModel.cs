@@ -97,6 +97,16 @@ namespace CustomerPortalWebApi.Models
         public string CustomerComments { get; set; }
 
 
+        public string BMDate { get; set; }
+
+        public string RMDate { get; set; }
+
+        public string RMOAccountsDate { get; set; }
+
+        public string CMODate { get; set; }
+
+        public string CustomerDate { get; set; }
+
 
     }
 }
