@@ -14,7 +14,11 @@ namespace CustomerPortalWebApi.Interface
         Task<OTPSuccessfullModel> GetOTPFORLOGIN(string UserCode);
 
         UserMaster LoginWithOTP(string mobileno,string OTP,string UserCode);
-    
+
+        Task<OTPSuccessfullModel> GetOTPFORCONFIRM(string UserCode);
+
+        OTPSuccessfullModel ConfirmWithOTP(string mobileno, string OTP, string UserCode);
+
         Task SendEmailToCustomerBalanceConfirmation(string CustomerCode, string fromdate, string todate);
 
         Task SendEmailToAccountingHeadBalanceConfirmation(string UserName, string usercode, string emailid, string fromdate, string todate, string requsetno, string customercode);

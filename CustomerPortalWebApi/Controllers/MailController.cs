@@ -237,5 +237,48 @@ namespace CustomerPortalWebApi.Controllers
         }
 
 
+
+        [AllowAnonymous]
+        [HttpGet("GetOTPFORConfirmation/{UserCode}")]
+        public async Task<OTPSuccessfullModel> GetOTPFORConfirmation(string UserCode)
+        {
+            try
+            {
+
+
+                var result = await mailService.GetOTPFORCONFIRM(UserCode);
+                //return Ok("OTP for paswword reset has been send to your email Id and mobile number, OTP will be valid for 15 min");
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                throw;
+            }
+        }
+
+
+        [AllowAnonymous]
+        [HttpGet("ConfirmationWithOTP/{MobileNumber},{OTP},{UserCode}")]
+        public OTPSuccessfullModel ConfirmationWithOTP(string MobileNumber, string OTP, string UserCode)
+        {
+            try
+            {
+
+
+                var result = mailService.ConfirmWithOTP(MobileNumber, OTP, UserCode);
+                //return Ok("OTP for paswword reset has been send to your email Id and mobile number, OTP will be valid for 15 min");
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                throw;
+            }
+        }
+
+
     }
 }

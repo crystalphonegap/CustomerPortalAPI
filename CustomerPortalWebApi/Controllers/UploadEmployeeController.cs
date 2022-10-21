@@ -601,6 +601,94 @@ namespace CustomerPortalWebApi.Controllers
             }
         }
 
+
+        //USE FOR RegionalAccountingHeadUpload 
+        [HttpPost("RegionalAccountingHeadUpload"), DisableRequestSizeLimit]
+        public IActionResult RegionalAccountingHeadUpload()
+        {
+            try
+            {
+                var files = Request.Form.Files;
+                var folderName = Path.Combine("Uploads", "ExcelFiles");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                if (files.Any(f => f.Length == 0))
+                {
+                    return BadRequest();
+                }
+                foreach (var file in files)
+                {
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName); //you can add this path to a list and then return all dbPaths to the client if require
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                        IExcelDataReader reader = null;
+
+                        if (file.FileName.EndsWith(".xls"))
+                        {
+                            reader = ExcelReaderFactory.CreateBinaryReader(stream);
+                        }
+                        else if (file.FileName.EndsWith(".xlsx"))
+                        {
+                            reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+                        }
+                        else
+                        {
+                            return BadRequest();
+                        }
+                        DataSet excelRecords = reader.AsDataSet();
+                        reader.Close();
+                        var finalRecords = excelRecords.Tables[0];
+                        List<UploadEmployeeModel> lstEMployees = new List<UploadEmployeeModel>();
+                        if (finalRecords.Columns.Count == 5)
+                        {
+                            for (int i = 1; i < finalRecords.Rows.Count; i++)
+                            {
+                                UploadEmployeeModel empmodel = new UploadEmployeeModel();
+                                empmodel.UserCodetxt = finalRecords.Rows[i][0].ToString();
+                                empmodel.UserNametxt = finalRecords.Rows[i][1].ToString();
+                                empmodel.Emailvtxt = finalRecords.Rows[i][2].ToString();
+                                empmodel.Mobilevtxt = finalRecords.Rows[i][3].ToString();
+                                empmodel.ParentCode = finalRecords.Rows[i][4].ToString();
+                                empmodel.Passwordvtxt = "1234";
+                                empmodel.UserTypetxt = "Regional AccountingHead";
+                                empmodel.Divisionvtxt = "Cement";
+                                empmodel.CreatedByint = 1;
+                                empmodel.CreatedDatedatetime = DateTime.Now;
+                                lstEMployees.Add(empmodel);
+                            }
+                            if (lstEMployees.Count > 0)
+                            {
+                                _UploadEmployeeService.DeleteTempUserMaster("Regional AccountingHead");
+                                for (int k = 0; k < lstEMployees.Count; k++)
+                                {
+                                    long j = _UploadEmployeeService.InsertUserMasterIntoTemp(lstEMployees[k]);
+                                }
+                                _UploadEmployeeService.InsertUserMasterIntoMain("Regional AccountingHead");
+                                List<UploadEmployeeModel> lst = new List<UploadEmployeeModel>();
+                                lst = _UploadEmployeeService.GetTempUserMaster("Regional AccountingHead");
+                                if (lst.Count > 0)
+                                {
+                                    return Ok("Error in Uploaded File");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            return Ok("Please Select Proper file to upload.");
+                        }
+                    }
+                }
+                return Ok("file is  uploaded Successfully.");
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         //USE FOR KAM upload
         [HttpPost("KAMUpload"), DisableRequestSizeLimit]
         public IActionResult KAMUpload()
@@ -1269,6 +1357,14 @@ namespace CustomerPortalWebApi.Controllers
                         worksheet.Cell(currentRow, 4).Value = "Mobile";
                         worksheet.Cell(currentRow, 5).Value = "Zone Code";
                     }
+                    else if (strusertype == "Regional AccountingHead")
+                    {
+                        worksheet.Cell(currentRow, 1).Value = "Regional AccountingHead Code";
+                        worksheet.Cell(currentRow, 2).Value = "Regional AccountingHead Name";
+                        worksheet.Cell(currentRow, 3).Value = "Email";
+                        worksheet.Cell(currentRow, 4).Value = "Mobile";
+                        worksheet.Cell(currentRow, 5).Value = "Region Code";
+                    }
                     foreach (var emps in lstemp)
                     {
                         currentRow++;
@@ -1429,6 +1525,14 @@ namespace CustomerPortalWebApi.Controllers
                         worksheet.Cell(currentRow, 4).Value = "Email";
                         worksheet.Cell(currentRow, 5).Value = "Mobile";
                         worksheet.Cell(currentRow, 6).Value = "Zone Code";
+                    }
+                    else if (strusertype == "Regional AccountingHead")
+                    {
+                        worksheet.Cell(currentRow, 2).Value = "Regional AccountingHead Code";
+                        worksheet.Cell(currentRow, 3).Value = "Regional AccountingHead Name";
+                        worksheet.Cell(currentRow, 4).Value = "Email";
+                        worksheet.Cell(currentRow, 5).Value = "Mobile";
+                        worksheet.Cell(currentRow, 6).Value = "Region Code";
                     }
                     worksheet.Cell(currentRow, 7).Value = "Remarks";
                     foreach (var emp in emps)

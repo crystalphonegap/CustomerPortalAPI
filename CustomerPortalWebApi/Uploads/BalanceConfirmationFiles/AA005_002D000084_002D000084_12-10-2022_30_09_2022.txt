@@ -1,0 +1,7 @@
+Access to XMLHttpRequest At from origin has been blocked by 
+CORS policy:No 'Access-Control-Allow-Origin' Header is present 
+in requested resource
+
+0992181429
+localStorage.getItem(constStorage.UserCode)
+this.UserType = localStorage.getItem(constStorage.UserType)

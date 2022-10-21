@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CustomerPortalWebApi.Models
 {
@@ -52,5 +53,36 @@ namespace CustomerPortalWebApi.Models
         public string AttachmentFilevtxt { get; set; }
 
         public string AttachmentPathvtxt { get; set; }
+
+        public string PendingAt { get; set; }
+
+        public int EscalationLevel { get; set; }
+
+        public string UserCode { get; set; }
+
+        public string UserType { get; set; }
+
+        public List<LedgerBalanceConfirmationAttachments> Attachments { get; set;}
+    }
+
+    public class LedgerBalanceConfirmationAttachments
+    {
+        public long IDbint { get; set; }
+
+        public long AttachID { get; set; }
+        public long DetailsIdbint { get; set; }
+
+        public string ActionUserType { get; set; }
+        public string ActionUserCode { get; set; }
+
+        public string ActionUserDate { get; set; }
+
+
+        public string AttachmentFileNamevtxt { get; set; }
+
+        public string AttachmentFilevtxt { get; set; }
+
+        public string AttachmentPathvtxt { get; set; }
+
     }
 }

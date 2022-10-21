@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
+using System.Data.Common;
+using Microsoft.Extensions.Configuration;
+
 
 namespace CustomerPortalWebApi.Services
 {
@@ -15,10 +19,13 @@ namespace CustomerPortalWebApi.Services
 
         private readonly IMailService _MailService;
 
-        public BalanceConfirmationService(ICustomerPortalHelper customerPortalHelper, IMailService mailService)
+        private readonly IConfiguration _config;
+
+        public BalanceConfirmationService(ICustomerPortalHelper customerPortalHelper, IMailService mailService,IConfiguration config)
         {
             _customerPortalHelper = customerPortalHelper;
             _MailService = mailService;
+            _config = config;
         }
 
         public long InsertBalConfirmationIntoTempTable(BalConfirmationModel balconf)
@@ -116,6 +123,97 @@ namespace CustomerPortalWebApi.Services
                             dbPara,
                             commandType: CommandType.StoredProcedure);
             return data;
+        }
+
+        public List<BalConfirmationModel> GetBalanceConfHeaderforRegionalAccountingHead(string usertype, string usercode, string fromdate, string todate,string Region, string Branch,string Territory, int PageNo, int PageSize)
+        {
+            DateTime fdate = DateTime.ParseExact(fromdate, "dd-MM-yyyy", null);
+            DateTime tdate = DateTime.ParseExact(todate, "dd-MM-yyyy", null);
+            var dbPara = new DynamicParameters();
+            dbPara.Add("usertype", usertype, DbType.String);
+            dbPara.Add("usercode", usercode, DbType.String);
+            dbPara.Add("fromDate", Convert.ToDateTime(fdate).ToString("yyyy-MM-dd"), DbType.String);
+            dbPara.Add("todate", Convert.ToDateTime(tdate).ToString("yyyy-MM-dd"), DbType.String);
+            if (Region == "NoSearch")
+            {
+                dbPara.Add("Region", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("Region", Region, DbType.String);
+            }
+            if (Branch == "NoSearch")
+            {
+                dbPara.Add("Branch", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("Branch", Branch, DbType.String);
+            }
+            if (Territory == "NoSearch")
+            {
+                dbPara.Add("Territory", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("Territory", Territory, DbType.String);
+            }
+            dbPara.Add("PageNo", PageNo, DbType.Int32);
+            dbPara.Add("PageSize", PageSize, DbType.Int32);
+            dbPara.Add("Mode", "List", DbType.String);
+            var data = _customerPortalHelper.GetAll<BalConfirmationModel>("[dbo].[uspviewBalanceConfHeaderdataByRegionalAccountingHead]",
+                            dbPara,
+                            commandType: CommandType.StoredProcedure);
+            return data;
+        }
+
+        public long GetBalanceConfHeaderforRegionalAccountingHeadCount(string usertype, string usercode,string fromdate,string todate, string Region, string Branch, string Territory)
+        {
+            DateTime fdate = DateTime.ParseExact(fromdate, "dd-MM-yyyy", null);
+            DateTime tdate = DateTime.ParseExact(todate, "dd-MM-yyyy", null);
+            var dbPara = new DynamicParameters();
+            dbPara.Add("usertype", usertype, DbType.String);
+            dbPara.Add("usercode", usercode, DbType.String);
+            dbPara.Add("fromDate", Convert.ToDateTime(fdate).ToString("yyyy-MM-dd"), DbType.String);
+            dbPara.Add("todate", Convert.ToDateTime(tdate).ToString("yyyy-MM-dd"), DbType.String);
+            if (Region == "NoSearch")
+            {
+                dbPara.Add("Region", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("Region", Region, DbType.String);
+            }
+            if (Branch == "NoSearch")
+            {
+                dbPara.Add("Branch", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("Branch", Branch, DbType.String);
+            }
+            if (Territory == "NoSearch")
+            {
+                dbPara.Add("Territory", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("Territory", Territory, DbType.String);
+            }
+            dbPara.Add("PageNo", 0, DbType.Int32);
+            dbPara.Add("PageSize", 0, DbType.Int32);
+            dbPara.Add("Mode", "Count", DbType.String);
+            var data = _customerPortalHelper.GetAll<BalConfirmationModel>("[dbo].[uspviewBalanceConfHeaderdataByRegionalAccountingHead]",
+                            dbPara,
+                            commandType: CommandType.StoredProcedure);
+            if (data != null)
+            {
+                return data.ToList().Count();
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         public long GetBalanceConfHeaderforAccountingHeadCount(string usercode)
@@ -228,6 +326,142 @@ namespace CustomerPortalWebApi.Services
             await _MailService.SendEmailToAccountingHeadBalanceConfirmation(usermodel.UserNametxt, usermodel.UserCodetxt, usermodel.Emailvtxt, model.FromDatedatetime.ToString(), model.ToDatedatetime.ToString(), model.RequestNovtxt, model.CustomerCodevtxt);
         }
 
+
+        public async Task UpdateCustomerLedgerbalanceconfStatusWithAttachments(LedgerBalanceConfirmationHeader model)
+        {
+            try
+            {
+                long result=0;
+                SqlTransaction objTrans = null;
+                long detailid = 0;
+                using (IDbConnection db = new SqlConnection(_config.GetConnectionString("DatabaseContext")))
+                {
+                    if (db.State == ConnectionState.Closed)
+                        db.Open();
+                    using (var tran = db.BeginTransaction())
+                    {
+                        try
+                        {
+                            var dbPara = new DynamicParameters();
+                            dbPara.Add("IDbint", model.IDbint, DbType.Int64);
+                            dbPara.Add("BalanceConfirmationStatus", model.BalanceConfirmationStatus, DbType.Boolean);
+                            dbPara.Add("BalanceConfirmationAction", model.BalanceConfirmationAction, DbType.String);
+                            dbPara.Add("BalanceConfirmationUser", model.BalanceConfirmationUser, DbType.String);
+                            dbPara.Add("Remarksvtxt", model.Remarksvtxt, DbType.String);
+                            dbPara.Add("AttachmentFileNamevtxt", model.AttachmentFileNamevtxt, DbType.String);
+                            dbPara.Add("AttachmentFilevtxt", model.AttachmentFilevtxt, DbType.String);
+                            dbPara.Add("AttachmentPathvtxt", model.AttachmentPathvtxt, DbType.String);
+                            result = db.Query<long>("[dbo].[uspUpdateCustomerLedgerBalance]", dbPara, commandType: CommandType.StoredProcedure, transaction: tran).FirstOrDefault();
+                            //var data = _customerPortalHelper.InsertTrans<long>(tran, "[dbo].[uspUpdateCustomerLedgerBalance]",
+                            //                dbPara,
+                            //                commandType: CommandType.StoredProcedure);
+
+                            var dbPara1 = new DynamicParameters();
+                            dbPara1.Add("HeaderIDbint", model.IDbint, DbType.Int64);
+                            dbPara1.Add("UserCodevtxt", model.UserCode, DbType.String);
+                            dbPara1.Add("UserTypevtxt", model.UserType, DbType.String);
+                            dbPara1.Add("Remarksvtxt", model.Remarksvtxt, DbType.String);
+                            dbPara1.Add("Statusvtxt", model.BalanceConfirmationAction, DbType.String);
+                            result = db.Query<long>("[dbo].[uspInsertBalConfirmLog]", dbPara1, commandType: CommandType.StoredProcedure, transaction: tran).FirstOrDefault();
+                            detailid = result;
+
+                            if (detailid > 0)
+                            {
+                                if (model.Attachments != null)
+                                {
+                                    if (model.Attachments.Count > 0)
+                                    {
+                                        for (int i = 0; i < model.Attachments.Count; i++)
+                                        {
+                                            var dbPara2 = new DynamicParameters();
+                                            dbPara2.Add("DetailsIdbint", detailid, DbType.Int64);
+                                            dbPara2.Add("AttachmentFileNamevtxt", model.Attachments[i].AttachmentFileNamevtxt, DbType.String);
+                                            dbPara2.Add("AttachmentFilevtxt", model.Attachments[i].AttachmentFilevtxt, DbType.String);
+                                            dbPara2.Add("AttachmentPathvtxt", model.Attachments[i].AttachmentPathvtxt, DbType.String);
+                                            result = db.Query<long>("[dbo].[uspInsertBalConfirmAttachments]", dbPara2, commandType: CommandType.StoredProcedure, transaction: tran).FirstOrDefault();
+                                        }
+                                    }
+                                }
+                               
+                                tran.Commit();
+                                await _MailService.SendEmailToCustomerBalanceConfirmation(model.UserCode, model.FromDatedatetime.ToString(), model.ToDatedatetime.ToString());
+                                //UserMasterModel usermodel = GetAccountingHeadEmailID(model.RequestIdbint);
+                                //await _MailService.SendEmailToAccountingHeadBalanceConfirmation(usermodel.UserNametxt, usermodel.UserCodetxt, usermodel.Emailvtxt, model.FromDatedatetime.ToString(), model.ToDatedatetime.ToString(), model.RequestNovtxt, model.CustomerCodevtxt);
+                            }
+                            else
+                            {
+                                tran.Rollback();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                
+            }
+        }
+
+        public void UpdateCustomerLedgerbalanceconfStatusWithAttachmentsByEmp(LedgerBalanceConfirmationHeader model)
+        {
+            try
+            {
+                long result = 0;
+                long detailid = 0;
+                using (IDbConnection db = new SqlConnection(_config.GetConnectionString("DatabaseContext")))
+                {
+                    if (db.State == ConnectionState.Closed)
+                        db.Open();
+                    using (var tran = db.BeginTransaction())
+                    {
+                        try
+                        {
+                            var dbPara1 = new DynamicParameters();
+                            dbPara1.Add("HeaderIDbint", model.IDbint, DbType.Int64);
+                            dbPara1.Add("UserCodevtxt", model.UserCode, DbType.String);
+                            dbPara1.Add("UserTypevtxt", model.UserType, DbType.String);
+                            dbPara1.Add("Remarksvtxt", model.Remarksvtxt, DbType.String);
+                            dbPara1.Add("Statusvtxt", model.BalanceConfirmationAction, DbType.String);
+                            result = db.Query<long>("[dbo].[uspInsertBalConfirmLog]", dbPara1, commandType: CommandType.StoredProcedure, transaction: tran).FirstOrDefault();
+                            detailid = result;
+                            if (detailid > 0)
+                            {
+                                if (model.Attachments.Count > 0)
+                                {
+                                    for (int i = 0; i < model.Attachments.Count; i++)
+                                    {
+                                        var dbPara2 = new DynamicParameters();
+                                        dbPara2.Add("DetailsIdbint", detailid, DbType.Int64);
+                                        dbPara2.Add("AttachmentFileNamevtxt", model.Attachments[i].AttachmentFileNamevtxt, DbType.String);
+                                        dbPara2.Add("AttachmentFilevtxt", model.Attachments[i].AttachmentFilevtxt, DbType.String);
+                                        dbPara2.Add("AttachmentPathvtxt", model.Attachments[i].AttachmentPathvtxt, DbType.String);
+                                        result = db.Query<long>("[dbo].[uspInsertBalConfirmAttachments]", dbPara2, commandType: CommandType.StoredProcedure, transaction: tran).FirstOrDefault();
+                                    }
+                                }
+                                tran.Commit();
+                            }
+                            else
+                            {
+                                tran.Rollback();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
         public UserMasterModel GetAccountingHeadEmailID(long requestid)
         {
             var dbPara = new DynamicParameters();
@@ -285,6 +519,98 @@ namespace CustomerPortalWebApi.Services
                             dbPara,
                             commandType: CommandType.StoredProcedure);
             return data;
+        }
+
+
+        public List<BalConfirmationActionLogModel> GetBalanceConfirmationActionLog(string usertype, string usercode, string fromdate, string todate, string Region, string Branch, string Territory, int PageNo, int PageSize)
+        {
+            DateTime fdate = DateTime.ParseExact(fromdate, "dd-MM-yyyy", null);
+            DateTime tdate = DateTime.ParseExact(todate, "dd-MM-yyyy", null);
+            var dbPara = new DynamicParameters();
+            dbPara.Add("usertype", usertype, DbType.String);
+            dbPara.Add("usercode", usercode, DbType.String);
+            dbPara.Add("fromDate", Convert.ToDateTime(fdate).ToString("yyyy-MM-dd"), DbType.String);
+            dbPara.Add("todate", Convert.ToDateTime(tdate).ToString("yyyy-MM-dd"), DbType.String);
+            if (Region == "NoSearch")
+            {
+                dbPara.Add("Region", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("Region", Region, DbType.String);
+            }
+            if (Branch == "NoSearch")
+            {
+                dbPara.Add("Branch", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("Branch", Branch, DbType.String);
+            }
+            if (Territory == "NoSearch")
+            {
+                dbPara.Add("Territory", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("Territory", Territory, DbType.String);
+            }
+            dbPara.Add("PageNo", PageNo, DbType.Int32);
+            dbPara.Add("PageSize", PageSize, DbType.Int32);
+            dbPara.Add("Mode", "List", DbType.String);
+            var data = _customerPortalHelper.GetAll<BalConfirmationActionLogModel>("[dbo].[USP_GetBalanceConfActionReport]",
+                            dbPara,
+                            commandType: CommandType.StoredProcedure);
+            return data;
+        }
+
+        public long GetBalanceConfirmationActionLogCount(string usertype, string usercode, string fromdate, string todate, string Region, string Branch, string Territory)
+        {
+            DateTime fdate = DateTime.ParseExact(fromdate, "dd-MM-yyyy", null);
+            DateTime tdate = DateTime.ParseExact(todate, "dd-MM-yyyy", null);
+            var dbPara = new DynamicParameters();
+            dbPara.Add("usertype", usertype, DbType.String);
+            dbPara.Add("usercode", usercode, DbType.String);
+            dbPara.Add("fromDate", Convert.ToDateTime(fdate).ToString("yyyy-MM-dd"), DbType.String);
+            dbPara.Add("todate", Convert.ToDateTime(tdate).ToString("yyyy-MM-dd"), DbType.String);
+            if (Region == "NoSearch")
+            {
+                dbPara.Add("Region", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("Region", Region, DbType.String);
+            }
+            if (Branch == "NoSearch")
+            {
+                dbPara.Add("Branch", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("Branch", Branch, DbType.String);
+            }
+            if (Territory == "NoSearch")
+            {
+                dbPara.Add("Territory", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("Territory", Territory, DbType.String);
+            }
+            dbPara.Add("PageNo", 0, DbType.Int32);
+            dbPara.Add("PageSize", 0, DbType.Int32);
+            dbPara.Add("Mode", "Count", DbType.String);
+            var data = _customerPortalHelper.GetAll<BalConfirmationModel>("[dbo].[USP_GetBalanceConfActionReport]",
+                            dbPara,
+                            commandType: CommandType.StoredProcedure);
+            if (data != null)
+            {
+                return data.ToList().Count();
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         public long GetBalanceConfHeaderListForEmployeeCount(string fromdate, string todate, string status, string usertype, string usercode, string KeyWord)
@@ -418,11 +744,36 @@ namespace CustomerPortalWebApi.Services
         }
 
 
+        public long InsertBalConfirmAttachments(LedgerBalanceConfirmationAttachments model,long idbint)
+        {
+            var dbPara = new DynamicParameters();
+            dbPara.Add("DetailsIdbint", idbint, DbType.Int64);
+            dbPara.Add("AttachmentFileNamevtxt", model.AttachmentFileNamevtxt, DbType.String);
+            dbPara.Add("AttachmentFilevtxt", model.AttachmentFilevtxt, DbType.String);
+            dbPara.Add("AttachmentPathvtxt", model.AttachmentPathvtxt, DbType.String);
+            var data = _customerPortalHelper.Insert<long>("[dbo].[uspInsertBalConfirmAttachments]",
+                            dbPara,
+                            commandType: CommandType.StoredProcedure);
+            return data;
+        }
+
+
+
         public List<LedgerBalanceConfirmationLog> GetBalanceConfLog(long HeaderIDbint)
         {
             var dbPara = new DynamicParameters();
             dbPara.Add("HeaderIDint", HeaderIDbint, DbType.Int64);
             var data = _customerPortalHelper.GetAll<LedgerBalanceConfirmationLog>("[dbo].[uspGetBalanceConfLog]",
+                            dbPara,
+                            commandType: CommandType.StoredProcedure);
+            return data;
+        }
+
+        public List<LedgerBalanceConfirmationAttachments> GetBalanceConfAttachments(long detailsid)
+        {
+            var dbPara = new DynamicParameters();
+            dbPara.Add("DetailID", detailsid, DbType.Int64);
+            var data = _customerPortalHelper.GetAll<LedgerBalanceConfirmationAttachments>("[dbo].[USP_GetBalanceConfAttachments]",
                             dbPara,
                             commandType: CommandType.StoredProcedure);
             return data;
@@ -492,6 +843,16 @@ namespace CustomerPortalWebApi.Services
             dbPara.Add("Mode", Mode, DbType.String);
             dbPara.Add("ID", ID, DbType.Int64);
             var data = _customerPortalHelper.Get<LedgerBalanceConfirmationHeader>("[dbo].[uspviewbalanceconfirmHeaderDetail]",
+                            dbPara,
+                            commandType: CommandType.StoredProcedure);
+            return data;
+        }
+
+        public LedgerBalanceConfirmationAttachments GetBalanceConfLogAttachmentDownload(long ID)
+        {
+            var dbPara = new DynamicParameters();
+            dbPara.Add("Id", ID, DbType.Int64);
+            var data = _customerPortalHelper.Get<LedgerBalanceConfirmationAttachments>("[dbo].[USP_GetBalanceConfigAttachmentByID]",
                             dbPara,
                             commandType: CommandType.StoredProcedure);
             return data;

@@ -61,6 +61,21 @@ namespace CustomerPortalWebApi.Controllers
         }
 
         // use for EmployeeWiseReport
+        [HttpGet("GetAccountingHeadEmployeeWiseReport/{mode},{code},{fdate},{tdate}")]
+        public IActionResult GetAccountingHeadEmployeeWiseReport(string mode, string code, string fdate, string tdate)
+        {
+            try
+            {
+                return Ok(_EmployeeService.GetAccountingHeadEmployeeWiseReport(mode, code, fdate, tdate));
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return BadRequest();
+            }
+        }
+
+        // use for EmployeeWiseReport
         [HttpGet("GetAreaNameByAreaCode/{mode},{code}")]
         public IActionResult GetAreaNameByAreaCode(string mode, string code)
         {
@@ -74,6 +89,22 @@ namespace CustomerPortalWebApi.Controllers
                 return BadRequest();
             }
         }
+
+        // use for SalesHierarchyforRCH
+        [HttpGet("GetSalesHierarchyforRCH/{UserType},{UserCode},{Mode},{Search}")]
+        public IActionResult GetSalesHierarchyforRCH(string UserType, string UserCode,string Mode,string Search)
+        {
+            try
+            {
+                return Ok(_EmployeeService.GetSalesHierachyforRAH(UserCode, UserType, Mode, Search));
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return BadRequest();
+            }
+        }
+
 
         // use for Dashboard count for Employee wise
         [HttpGet("GetEmployeeDashboardCount/{usercode},{usertype},{Type}")]

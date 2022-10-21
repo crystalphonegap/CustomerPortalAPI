@@ -422,6 +422,77 @@ namespace CustomerPortalWebApi.Services
             return UserMaster;
         }
 
+
+        public async Task<OTPSuccessfullModel> GetOTPFORCONFIRM(string UserCode)
+        {
+            var returndata = "";
+            Boolean SMS = false;
+
+            OTPSuccessfullModel OTPSuccessfullModel = new OTPSuccessfullModel();
+
+            //if (!string.IsNullOrEmpty(mobileno))
+            //{
+            Random rd = new Random();
+
+            int num = rd.Next(10000, 99999);
+            var dbPara = new DynamicParameters();
+            dbPara.Add("@P_MobileNumber", "", DbType.String);
+            dbPara.Add("@P_OTP", num, DbType.String);
+            dbPara.Add("@P_TYPE", "INSERT", DbType.String);
+            dbPara.Add("@P_USERCODE", UserCode, DbType.String);
+
+            var data = _customerPortalHelper.GetAll<OTPSuccessfullModel>("[dbo].[PRC_CONFIRM_OTP_LOGIN]", dbPara, commandType: CommandType.StoredProcedure);
+
+            var client = new HttpClient();
+            var Message = string.Format("Dear User, Please use OTP {0} to Login on Bandhan Dealer Portal. This OTP is valid for 15 min", num);// Dear User, Please use OTP {0} to Login on Bandhan Dealer Portal. This OTP is valid for 15 min
+            var Url = _config["SMS:URL"];
+            var urlstring = string.Format(Url, data[0].MOBILE, Message);
+            client.BaseAddress = (new Uri(urlstring));
+            client.DefaultRequestHeaders.Add("ContentType", "application/json");
+            HttpResponseMessage responsePost = await client.GetAsync(client.BaseAddress.ToString());
+            //{http://bhashsms.com/api/sendmsg.php?user=prismcement&pass=Pcl@2017&sender=PRISMD&phone=8450929346&text=Dear User, Please use OTP RS651525 to reset your password of Bandhan Dealer Portal. This OTP is valid for 15 min&priority=ndnd&stype=normal}
+            if (responsePost.IsSuccessStatusCode)
+            {
+                SMS = true;
+            }
+
+            OTPSuccessfullModel.MOBILE = data[0].MOBILE;
+            OTPSuccessfullModel.OTP = data[0].OTP;
+            OTPSuccessfullModel.MESSAGE = data[0].MESSAGE;
+
+            return OTPSuccessfullModel;
+
+        }
+
+        public OTPSuccessfullModel ConfirmWithOTP(string mobileno, string OTP, string UseCode)
+        {
+
+            OTPSuccessfullModel OTPSuccessfullModel = new OTPSuccessfullModel();
+            var dbPara = new DynamicParameters();
+            dbPara.Add("@P_MobileNumber", mobileno, DbType.String);
+            dbPara.Add("@P_OTP", OTP.Trim(), DbType.String);
+            dbPara.Add("@P_TYPE", "CHECKED", DbType.String);
+            dbPara.Add("@P_USERCODE", UseCode, DbType.String);
+
+            var data = _customerPortalHelper.GetAll<OTPSuccessfullModel>("[dbo].[PRC_CONFIRM_OTP_LOGIN]", dbPara, commandType: CommandType.StoredProcedure);
+
+            if (data.Count > 0)
+            {
+                OTPSuccessfullModel.MOBILE = data[0].MOBILE;
+                OTPSuccessfullModel.OTP = data[0].OTP;
+                OTPSuccessfullModel.MESSAGE = data[0].MESSAGE;
+            }
+            else
+            {
+                OTPSuccessfullModel.MOBILE = mobileno;
+                OTPSuccessfullModel.OTP = "0";
+                OTPSuccessfullModel.MESSAGE = "Invalid OTP";
+            }
+            
+
+            return OTPSuccessfullModel;
+        }
+
         public static string Decrypttxt(string cipherText)
         {
             string EncryptionKey = "MAKV2SPBNI99212";

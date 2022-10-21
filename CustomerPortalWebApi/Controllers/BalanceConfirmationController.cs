@@ -256,6 +256,105 @@ namespace CustomerPortalWebApi.Controllers
             }
         }
 
+
+        //use for Get BalConfHeaderData ForRH Count
+        [HttpGet("GetBalConfHeaderDataForRH/{fromdate},{todate},{usertype},{usercode},{Region},{Branch},{Territory},{PageNo},{PageSize}")]
+        public IActionResult GetBalConfHeaderDataForRH(string fromdate, string todate, string usertype, string usercode,string Region, string Branch,string Territory , int PageNo, int PageSize)
+        {
+            try
+            {
+                string Token = Request.Headers["Authorization"];
+                string[] authorize = Token.Split(" ");
+                if (_Checktokenservice.CheckToken(authorize[1].Trim(), usercode))
+                {
+                    return Ok(_BalanceConfirmationService.GetBalanceConfHeaderforRegionalAccountingHead(usertype,usercode, fromdate,todate, Region, Branch,Territory,PageNo, PageSize));
+                }
+                else
+                {
+                    return Ok("Un Authorized User");
+                }
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return BadRequest();
+            }
+        }
+
+        //use for Get BalConfHeaderData  ForRH Count
+        [HttpGet("GetBalConfHeaderDataForRHCount/{fromdate},{todate},{usertype},{usercode},{Region},{Branch},{Territory}")]
+        public IActionResult GetBalConfHeaderDataForRHCount(string fromdate, string todate, string usertype, string usercode, string Region, string Branch, string Territory)
+        {
+            try
+            {
+                string Token = Request.Headers["Authorization"];
+                string[] authorize = Token.Split(" ");
+                if (_Checktokenservice.CheckToken(authorize[1].Trim(), usercode))
+                {
+                    return Ok(_BalanceConfirmationService.GetBalanceConfHeaderforRegionalAccountingHeadCount(usertype,usercode, fromdate, todate, Region, Branch, Territory));
+                }
+                else
+                {
+                    return Ok("Un Authorized User");
+                }
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return BadRequest();
+            }
+        }
+
+
+        //use for Get BalConf Action Report 
+        [HttpGet("GetBalConfHeaderDataForActionReport/{fromdate},{todate},{usertype},{usercode},{Region},{Branch},{Territory},{PageNo},{PageSize}")]
+        public IActionResult GetBalConfHeaderDataForActionReport(string fromdate, string todate, string usertype, string usercode, string Region, string Branch, string Territory, int PageNo, int PageSize)
+        {
+            try
+            {
+                string Token = Request.Headers["Authorization"];
+                string[] authorize = Token.Split(" ");
+                if (_Checktokenservice.CheckToken(authorize[1].Trim(), usercode))
+                {
+                    return Ok(_BalanceConfirmationService.GetBalanceConfirmationActionLog(usertype, usercode, fromdate, todate, Region, Branch, Territory, PageNo, PageSize));
+                }
+                else
+                {
+                    return Ok("Un Authorized User");
+                }
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return BadRequest();
+            }
+        }
+
+        //use for Get BalConf Action Report Count
+        [HttpGet("GetBalConfHeaderDataForActionReportCount/{fromdate},{todate},{usertype},{usercode},{Region},{Branch},{Territory}")]
+        public IActionResult GetBalConfHeaderDataForActionReportCount(string fromdate, string todate, string usertype, string usercode, string Region, string Branch, string Territory)
+        {
+            try
+            {
+                string Token = Request.Headers["Authorization"];
+                string[] authorize = Token.Split(" ");
+                if (_Checktokenservice.CheckToken(authorize[1].Trim(), usercode))
+                {
+                    return Ok(_BalanceConfirmationService.GetBalanceConfirmationActionLogCount(usertype, usercode, fromdate, todate, Region, Branch, Territory));
+                }
+                else
+                {
+                    return Ok("Un Authorized User");
+                }
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return BadRequest();
+            }
+        }
+
+
         //use for Get BalConfHeaderData ForAH Count
         [HttpGet("GetBalConfHeaderDataForAHCount/{usercode}")]
         public long GetBalConfHeaderDataForAHCount(string usercode)
@@ -544,6 +643,7 @@ namespace CustomerPortalWebApi.Controllers
         {
             try
             {
+                List<LedgerBalanceConfirmationAttachments> ListbalAttachments = new List<LedgerBalanceConfirmationAttachments>();
                 string Token = Request.Headers["Authorization"];
                 string[] authorize = Token.Split(" ");
                 if (_Checktokenservice.CheckToken(authorize[1].Trim(), User))
@@ -575,12 +675,15 @@ namespace CustomerPortalWebApi.Controllers
                         updatebal.AttachmentPathvtxt = "";
                         updatebal.AttachmentFileNamevtxt = "";
                         updatebal.AttachmentFilevtxt = "";
-                        _BalanceConfirmationService.UpdateCustomerLedgerbalanceconfStatus(updatebal);
+                        updatebal.UserType = "Customer";
+                        updatebal.UserCode = User;
+                        _BalanceConfirmationService.UpdateCustomerLedgerbalanceconfStatusWithAttachments(updatebal);
                     }
                     else
                     {
                         foreach (var file in files)
                         {
+                            LedgerBalanceConfirmationAttachments balAttachments = new LedgerBalanceConfirmationAttachments();
                             var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                             string filenameforsave = RequestNo + '_' + User + '_' + DateTime.Now.ToString("dd-MM-yyyy") + '_' + fileName;
                             var fullPath = Path.Combine(pathToSave, filenameforsave);
@@ -588,44 +691,34 @@ namespace CustomerPortalWebApi.Controllers
                             using (var stream = new FileStream(fullPath, FileMode.Create))
                             {
                                 file.CopyTo(stream);
-                                IExcelDataReader reader = null;
-
-                                if (file.FileName.EndsWith(".xls"))
-                                {
-                                    reader = ExcelReaderFactory.CreateBinaryReader(stream);
-                                }
-                                else if (file.FileName.EndsWith(".xlsx"))
-                                {
-                                    reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
-                                }
-                                else
-                                {
-                                    return BadRequest();
-                                }
-                                LedgerBalanceConfirmationHeader updatebal = new LedgerBalanceConfirmationHeader();
-                                updatebal.BalanceConfirmationAction = Action;
-                                if (Action == "A" || Action == "B")
-                                {
-                                    updatebal.BalanceConfirmationStatus = true;
-                                }
-                                else
-                                {
-                                    updatebal.BalanceConfirmationStatus = false;
-                                }
-                                updatebal.BalanceConfirmationUser = User;
-                                if (Remarks == "undefined")
-                                {
-                                    updatebal.Remarksvtxt = "";
-                                }
-                                else
-                                    updatebal.Remarksvtxt = Remarks;
-                                updatebal.IDbint = id;
-                                updatebal.AttachmentPathvtxt = pathToSave;
-                                updatebal.AttachmentFileNamevtxt = filenameforsave;
-                                updatebal.AttachmentFilevtxt = file.FileName;
-                                _BalanceConfirmationService.UpdateCustomerLedgerbalanceconfStatus(updatebal);
+                                balAttachments.AttachmentFileNamevtxt = file.FileName;
+                                balAttachments.AttachmentFilevtxt = filenameforsave;
+                                balAttachments.AttachmentPathvtxt = fullPath;
+                                ListbalAttachments.Add(balAttachments);
                             }
                         }
+                        LedgerBalanceConfirmationHeader updatebal = new LedgerBalanceConfirmationHeader();
+                        updatebal.BalanceConfirmationAction = Action;
+                        if (Action == "A" || Action == "B")
+                        {
+                            updatebal.BalanceConfirmationStatus = true;
+                        }
+                        else
+                        {
+                            updatebal.BalanceConfirmationStatus = false;
+                        }
+                        updatebal.BalanceConfirmationUser = User;
+                        if (Remarks == "undefined")
+                        {
+                            updatebal.Remarksvtxt = "";
+                        }
+                        else
+                            updatebal.Remarksvtxt = Remarks;
+                        updatebal.IDbint = id;
+                        updatebal.Attachments = ListbalAttachments;
+                        updatebal.UserType = "Customer";
+                        updatebal.UserCode = User;
+                        _BalanceConfirmationService.UpdateCustomerLedgerbalanceconfStatusWithAttachments(updatebal);
                     }
 
                     return Ok("file is  uploaded Successfully.");
@@ -641,6 +734,86 @@ namespace CustomerPortalWebApi.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        //use for update BalanceConfirmation for eMPLOYEE
+        [HttpPost("UpdateBalanceConfirmationByEmp/{id},{RequestNo},{Action},{Usertype},{UserCode},{Remarks}"), DisableRequestSizeLimit]
+        public IActionResult UpdateBalanceConfirmationByEmp(long id, string RequestNo, string Action, string Usertype,string UserCode, string Remarks)
+        {
+            try
+            {
+                List<LedgerBalanceConfirmationAttachments> ListbalAttachments = new List<LedgerBalanceConfirmationAttachments>();
+                string Token = Request.Headers["Authorization"];
+                string[] authorize = Token.Split(" ");
+                if (_Checktokenservice.CheckToken(authorize[1].Trim(), UserCode))
+                {
+                    var files = Request.Form.Files;
+                    var folderName = Path.Combine("Uploads", "BalanceConfirmationFiles");
+                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                    if (files.Count == 0)
+                    {
+                        LedgerBalanceConfirmationHeader updatebal = new LedgerBalanceConfirmationHeader();
+                        updatebal.BalanceConfirmationAction = Action;
+                        updatebal.BalanceConfirmationUser = UserCode;
+                        if (Remarks == "undefined")
+                        {
+                            updatebal.Remarksvtxt = "";
+                        }
+                        else
+                            updatebal.Remarksvtxt = Remarks;
+                        updatebal.IDbint = id;
+                        updatebal.Attachments = ListbalAttachments;
+                        updatebal.UserType = Usertype;
+                        updatebal.UserCode = UserCode;
+                        _BalanceConfirmationService.UpdateCustomerLedgerbalanceconfStatusWithAttachmentsByEmp(updatebal);
+                    }
+                    else
+                    {
+                        foreach (var file in files)
+                        {
+                            LedgerBalanceConfirmationAttachments balAttachments = new LedgerBalanceConfirmationAttachments();
+                            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                            string filenameforsave = RequestNo + '_' + Usertype + '_' + UserCode + '_' + DateTime.Now.ToString("dd-MM-yyyy") + '_' + fileName;
+                            var fullPath = Path.Combine(pathToSave, filenameforsave);
+                            var dbPath = Path.Combine(folderName, filenameforsave); //you can add this path to a list and then return all dbPaths to the client if require
+                            using (var stream = new FileStream(fullPath, FileMode.Create))
+                            {
+                                file.CopyTo(stream);
+                                balAttachments.AttachmentFileNamevtxt = file.FileName;
+                                balAttachments.AttachmentFilevtxt = filenameforsave;
+                                balAttachments.AttachmentPathvtxt = fullPath;
+                                ListbalAttachments.Add(balAttachments);
+                            }
+                        }
+                        LedgerBalanceConfirmationHeader updatebal = new LedgerBalanceConfirmationHeader();
+                        updatebal.BalanceConfirmationAction = Action;
+                        updatebal.BalanceConfirmationUser = UserCode;
+                        if (Remarks == "undefined")
+                        {
+                            updatebal.Remarksvtxt = "";
+                        }
+                        else
+                            updatebal.Remarksvtxt = Remarks;
+                        updatebal.IDbint = id;
+                        updatebal.Attachments = ListbalAttachments;
+                        updatebal.UserType = Usertype;
+                        updatebal.UserCode = UserCode;
+                        _BalanceConfirmationService.UpdateCustomerLedgerbalanceconfStatusWithAttachmentsByEmp(updatebal);
+                    }
+
+                    return Ok("file is  uploaded Successfully.");
+                }
+                else
+                {
+                    return Ok("Un Authorized User");
+                }
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
 
         //use for update Expiry date of Balance confirmation
         [HttpPut("UpdateBalanceConfirmationByDealerDetails")]
@@ -1025,6 +1198,34 @@ namespace CustomerPortalWebApi.Controllers
             }
         }
 
+        [HttpGet("GetBalanceConfLogAttachmentDownload/{ID}")]
+        [Obsolete]
+        public IActionResult GetBalanceConfLogAttachmentDownload(long ID)
+        {
+            try
+            {
+                LedgerBalanceConfirmationAttachments model = _BalanceConfirmationService.GetBalanceConfLogAttachmentDownload(ID);
+                if (model.AttachmentFilevtxt == null)
+                    return Content("filename not present");
+                var uploads = _hostingEnvironment.WebRootPath;
+                uploads = uploads.Replace("\\wwwroot", "");
+                uploads = Path.Combine(uploads, "Uploads\\BalanceConfirmationFiles");
+
+                var filePath = Path.Combine(uploads, model.AttachmentFilevtxt);
+                if (!System.IO.File.Exists(filePath))
+                    return NotFound();
+                var net = new System.Net.WebClient();
+                var data = net.DownloadData(filePath);
+                var content = new System.IO.MemoryStream(data);
+                var contentType = "APPLICATION/octet-stream";
+                return File(content, contentType, model.AttachmentFileNamevtxt);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         private string GetContentType(string path)
         {
             var types = GetMimeTypes();
@@ -1052,7 +1253,8 @@ namespace CustomerPortalWebApi.Controllers
                 {".JPG", "image/jpeg"},
                 {".SVG", "image/jpeg"},
                 {".gif", "image/gif"},
-                {".csv", "text/csv"}
+                {".csv", "text/csv"},
+                {".PNG", "image/png"}
             };
         }
 
@@ -1080,6 +1282,20 @@ namespace CustomerPortalWebApi.Controllers
             try
             {
                 return Ok(_BalanceConfirmationService.GetBalanceConfLog(ID));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        //use for Balance Cong Attachments
+        [HttpGet("GetBalanceConfAttachment/{ID}")]
+        public IActionResult GetBalanceConfAttachment(long ID)
+        {
+            try
+            {
+               return Ok(_BalanceConfirmationService.GetBalanceConfAttachments(ID));
             }
             catch (Exception ex)
             {

@@ -49,7 +49,13 @@ namespace CustomerPortalWebApi.Models
 
         //New Added Premium branded Wise 
 
+        public int NoOfDealers { get; set; }
+        public int ActiveDealers { get; set; }
+        public int InActiveDealers { get; set; }
 
+        public int BalancePendingCount { get; set; }
+        public int BalanceAgreedCount { get; set; }
+        public int BalanceDisagreedCount { get; set; }
         public string Month { get; set; }
 
         public decimal? PremiumSales { get; set; }

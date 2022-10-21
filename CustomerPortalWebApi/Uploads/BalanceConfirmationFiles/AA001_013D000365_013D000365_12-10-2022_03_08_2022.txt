@@ -1,0 +1,22 @@
+meetpro.pilportal.com:11692
+meetprouat.pilportal.com:11693
+
+
+1030818
+
+
+UID:Uat_meetpro
+
+Password: TO511^xLM@qjEN$5xT1*8%Hx
+
+
+
+UID: Prod_meetpro
+
+Pass: m#+wlxi-wu3EsTecrIgahacr
+
+
+CNO0000142290
+
+
+ZSSD000000000003

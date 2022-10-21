@@ -337,6 +337,14 @@ namespace CustomerPortalWebApi.Services
             return data;
         }
 
+        public ReagonMaster Regions()
+        {
+            var dbPara = new DynamicParameters();
+            var data = _customerPortalHelper.Get<ReagonMaster>("[dbo].[uspgetRegion]", dbPara, commandType: CommandType.StoredProcedure);
+            return data;
+        }
+
+
         public UserMaster LoginLogs(string UserCode, string UserName, string UserType, string BrowserName, string IpAddress)
         {
             var dbPara = new DynamicParameters();
@@ -466,6 +474,53 @@ namespace CustomerPortalWebApi.Services
             }
             return rstusers;
         }
+
+
+        public List<UserMasterModel> GetRegionalHeadList(string usertype, string usercode, int PageNo, int PageSize, string KeyWord)
+        {
+            var dbPara = new DynamicParameters();
+            dbPara.Add("UserType", usertype, DbType.String);
+            dbPara.Add("UserCode", usercode, DbType.String);
+            dbPara.Add("PageNo", PageNo, DbType.Int32);
+            dbPara.Add("PageSize", PageSize, DbType.Int32);
+            if (KeyWord == "NoSearch")
+            {
+                dbPara.Add("KeyWord", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("KeyWord", KeyWord, DbType.String);
+            }
+            var data = _customerPortalHelper.GetAll<UserMasterModel>("[dbo].[uspGetRegionalHeadEmpList]",
+                            dbPara,
+                            commandType: CommandType.StoredProcedure);
+            List<UserMasterModel> users = data.ToList();
+            List<UserMasterModel> rstusers = new List<UserMasterModel>();
+            if (users.Count > 0)
+            {
+                for (int i = 0; i < users.Count; i++)
+                {
+                    UserMasterModel model = new UserMasterModel();
+                    model.UserCodetxt = users[i].UserCodetxt;
+                    model.UserNametxt = users[i].UserNametxt;
+                    model.Idbint = users[i].Idbint;
+                    model.UserTypetxt = users[i].UserTypetxt;
+                    model.Mobilevtxt = users[i].Mobilevtxt;
+                    model.Emailvtxt = users[i].Emailvtxt;
+                    model.Divisionvtxt = users[i].Divisionvtxt;
+                    model.IsActivebit = users[i].IsActivebit;
+                    model.Passwordvtxt = Decrypttxt(users[i].Passwordvtxt);
+                    model.IsActivebit = users[i].IsActivebit;
+                    model.ModifyByint = users[i].ModifyByint;
+                    model.ModifyDatedatetime = users[i].ModifyDatedatetime;
+                    model.CreatedByint = users[i].CreatedByint;
+                    model.CreatedDatedatetime = users[i].CreatedDatedatetime;
+                    rstusers.Add(model);
+                }
+            }
+            return rstusers;
+        }
+
 
         public List<UserMasterModel> GetAllUserMasterByParentCode(string status, string ParentCode, int PageNo, int PageSize, string KeyWord)
         {
@@ -603,6 +658,58 @@ namespace CustomerPortalWebApi.Services
                 dbPara.Add("KeyWord", KeyWord, DbType.String);
             }
             var data = _customerPortalHelper.GetAll<UserMasterModel>("[dbo].[uspviewAllUserMasterForDivisionAdminDownload]",
+                            dbPara,
+                            commandType: CommandType.StoredProcedure);
+            if (data != null)
+            {
+                return Convert.ToInt64(data.ToList().Count);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+
+        public List<UserMasterModel> GetAllRegionalHeadListDownload(string KeyWord)
+        {
+            var dbPara = new DynamicParameters();
+            if (KeyWord == "NoSearch")
+            {
+                dbPara.Add("KeyWord", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("KeyWord", KeyWord, DbType.String);
+            }
+            var data = _customerPortalHelper.GetAll<UserMasterModel>("[dbo].[uspviewRegionalHeadDownload]",
+                            dbPara,
+                            commandType: CommandType.StoredProcedure);
+
+            if (data != null)
+            {
+                return data.ToList();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public long GetRegionalHeadListCount(string usertype, string usercode, string KeyWord)
+        {
+            var dbPara = new DynamicParameters();
+            dbPara.Add("UserType", usertype, DbType.String);
+            dbPara.Add("UserCode", usercode, DbType.String);
+            if (KeyWord == "NoSearch")
+            {
+                dbPara.Add("KeyWord", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("KeyWord", KeyWord, DbType.String);
+            }
+            var data = _customerPortalHelper.GetAll<UserMasterModel>("[dbo].[uspviewRegionalHeadDownload]",
                             dbPara,
                             commandType: CommandType.StoredProcedure);
             if (data != null)

@@ -1,0 +1,296 @@
+
+strSendData = "{ " & vbCrLf
+    strSendData = strSendData & """Version"": ""1.1""" & "," & vbCrLf
+    strSendData = strSendData & """TranDtls"": {" & vbCrLf
+    strSendData = strSendData & """TaxSch"": ""GST""," & vbCrLf
+    strSendData = strSendData & """SupTyp"": ""B2B""," & vbCrLf
+    strSendData = strSendData & """EcmGstin"":null," & vbCrLf
+    'strSendData = strSendData & """EcmGstin"": null""," & vbCrLf
+     'strSendData = strSendData & """EcmGstin"": """ + STRGSTIN & """," & vbCrLf
+    strSendData = strSendData & """RegRev"": ""N""" & vbCrLf
+'    strSendData = strSendData & """IgstOnIntra"": ""N""" & vbCrLf
+    strSendData = strSendData & "}," & vbCrLf
+     
+    strSendData = strSendData & """DocDtls"": {" & vbCrLf
+    strSendData = strSendData & """No"": """ & txtInvNo.Text & """," & vbCrLf
+    strSendData = strSendData & """Typ"": ""INV""" & "," & vbCrLf
+    strSendData = strSendData & """Dt"": """ + strInvDate1 & """" & vbCrLf
+    strSendData = strSendData & "}," & vbCrLf
+    
+    strSendData = strSendData & """SellerDtls"": {" & vbCrLf
+    strSendData = strSendData & """Gstin"": """ + STRGSTIN & """," & vbCrLf
+    strSendData = strSendData & """LglNm"": """ + STRCOMPNAME & """," & vbCrLf
+    strSendData = strSendData & """TrdNm"": """ + STRCOMPNAME & """," & vbCrLf
+    strSendData = strSendData & """Addr1"": """ + RegCompAdd1 & """," & vbCrLf
+    strSendData = strSendData & """Addr2"": """ + RegCompAdd2 & """," & vbCrLf
+    'strSendData = strSendData & """Loc"": """ + StrStateName & """," & vbCrLf
+    strSendData = strSendData & """Loc"": """ + StrStateName & """," & vbCrLf
+    strSendData = strSendData & """Pin"": " + StrPincode & "," & vbCrLf
+    strSendData = strSendData & """Stcd"": """ + strStateCode & """," & vbCrLf
+    strSendData = strSendData & """Ph"": """ + STRPHONE & """," & vbCrLf
+    strSendData = strSendData & """Em"": """ + strEmail & """" & vbCrLf
+    'strSendData = strSendData & """Em"": ""abc@gmail.com""" & vbCrLf
+    strSendData = strSendData & "}," & vbCrLf
+    
+    strSendData = strSendData & """BuyerDtls"": {" & vbCrLf
+    strSendData = strSendData & """Gstin"": """ + STRCUST_GSTIN & """," & vbCrLf
+    strSendData = strSendData & """LglNm"": """ + cboCustomerName & """," & vbCrLf
+    strSendData = strSendData & """TrdNm"": """ + cboCustomerName & """," & vbCrLf
+    strSendData = strSendData & """Pos"": """ + STRCUST_SCODE & """," & vbCrLf
+    strSendData = strSendData & """Addr1"": """ + STRCUST_ADD1 & """," & vbCrLf
+    strSendData = strSendData & """Addr2"": """ + STRCUST_CITY & """," & vbCrLf
+    strSendData = strSendData & """Loc"": """ + STRCUST_CITY & """," & vbCrLf
+    strSendData = strSendData & """Pin"": " + STRCUST_PINCODE & "," & vbCrLf
+    strSendData = strSendData & """Stcd"": """ + STRCUST_SCODE & """," & vbCrLf
+    strSendData = strSendData & """Ph"": """ + StrCust_Phone & """," & vbCrLf
+    'strSendData = strSendData & """Ph"": ""9000000000""" & "," & vbCrLf
+    'strSendData = strSendData & """Em"": ""abc@gmail.com""" & vbCrLf
+    strSendData = strSendData & """Em"": """ + StrCust_Email & """" & vbCrLf
+    strSendData = strSendData & "}," & vbCrLf
+
+    strSendData = strSendData & """DispDtls"": {" & vbCrLf
+    strSendData = strSendData & """Nm"": """ + STRCOMPNAME & """," & vbCrLf
+    
+    If OptAdd1.VALUE = True Then
+        strSendData = strSendData & """Addr1"": """ + STRADD1 & """," & vbCrLf
+        strSendData = strSendData & """Addr2"": """ + STRADD2 & """," & vbCrLf
+    Else
+        strSendData = strSendData & """Addr1"": """ + STRADD4 & """," & vbCrLf
+        strSendData = strSendData & """Addr2"": """ + STRADD5 & """," & vbCrLf
+
+    End If
+    strSendData = strSendData & """Loc"": """ + StrStateName & """," & vbCrLf
+    strSendData = strSendData & """Pin"": " + StrPincode & "," & vbCrLf
+    strSendData = strSendData & """Stcd"": """ + strStateCode & """" & vbCrLf
+    strSendData = strSendData & "}," & vbCrLf
+
+    strSendData = strSendData & """ShipDtls"": {" & vbCrLf
+    strSendData = strSendData & """LglNm"": """ + cboConsignee & """," & vbCrLf
+    strSendData = strSendData & """TrdNm"": """ + cboConsignee & """," & vbCrLf
+    strSendData = strSendData & """Addr1"": """ + STRCUST1_ADD1 & """," & vbCrLf
+    strSendData = strSendData & """Addr2"": """ + STRCUST1_CITY & """," & vbCrLf
+    strSendData = strSendData & """Loc"": """ + STRCUST1_STATE & """," & vbCrLf
+    strSendData = strSendData & """Pin"": " + STRCUST1_PINCODE & "," & vbCrLf
+    strSendData = strSendData & """Stcd"": """ + STRCUST1_SCODE & """" & vbCrLf
+    strSendData = strSendData & "}," & vbCrLf
+    Dim CTR As Integer
+    CTR = 1
+    strSendData = strSendData & """itemList"": [" & vbCrLf
+    While rs.EOF <> True
+'                    strSendData = strSendData & "{""productName"": """ + ItemName + " " + rs(4) & """," & vbCrLf
+                    'strSendData = strSendData & "{""SlNo"": ""1""" & "," & vbCrLf
+                    strSendData = strSendData & "{""SlNo"": """ + Trim(CTR) & """," & vbCrLf
+                    strSendData = strSendData & """PrdDesc"": """ + ItemName + " " + rs(4) & """," & vbCrLf
+                    strSendData = strSendData & """IsServc"": ""N""" & "," & vbCrLf
+                    
+                    Set RsItem = New Recordset
+                    If RsItem.State = 1 Then RsItem.Close
+                    RsItem.Open "select binlocation from item_master where iname='" & rs(4) & "'", gConDb, adOpenDynamic, adLockOptimistic
+                    If RsItem.EOF <> True And RsItem.BOF <> True Then
+                        StrHSN = RsItem(0)
+                    End If
+
+                    strSendData = strSendData & """HsnCd"": """ + StrHSN & """," & vbCrLf
+                    strSendData = strSendData & """Barcde"": ""123456""" & "," & vbCrLf
+
+                    strSendData = strSendData & """Qty"": " + rs(5) & "," & vbCrLf
+                    strSendData = strSendData & """FreeQty"": 0" & "," & vbCrLf
+
+                    'strSendData = strSendData & """qtyUnit"": """ + rs(6) & """," & vbCrLf
+                    If rs(6) = "KG" Then
+                        strSendData = strSendData & """Unit"": ""KGS""" & "," & vbCrLf
+                    Else
+                        strSendData = strSendData & """Unit"": """ + rs(6) & """," & vbCrLf
+                    End If
+                    strSendData = strSendData & """UnitPrice"": " + Trim(Val(rs(7))) & "," & vbCrLf
+                    strSendData = strSendData & """TotAmt"": " + Trim(rs(9)) & "," & vbCrLf
+                    
+''                    TotAmt = Val(rs(9) * Val(TotExt))
+''                    totamt1 = TotAmt + Val(rs(9))
+''                    totamt1 = VBA.Format(totamt1, "#0.00")
+''                    SubTotalAmt = SubTotalAmt + totamt1
+''                    UNITPR = totamt1 / rs(5)
+''                    strSendData = strSendData & """UnitPrice"": " + Trim(UNITPR) & "," & vbCrLf
+''                    strSendData = strSendData & """TotAmt"": " + (totamt1) & "," & vbCrLf
+                    'TotAmt = rs(9) + Val(rs(9)) * Val(ExtraCharges)
+                    'strSendData = strSendData & """TotAmt"": " + Trim((rs(9))) & "," & vbCrLf
+                    'strSendData = strSendData & """TotAmt"": " + TotAmt & "," & vbCrLf
+
+                    'strSendData = strSendData & """Discount"": " + Trim(Val(lblTradDis) + Val(lblcashdis)) & "," & vbCrLf
+                    
+                    strSendData = strSendData & """Discount"": " + Trim(rs(11)) & "," & vbCrLf
+
+                    strSendData = strSendData & """PreTaxVal"": 0" & "," & vbCrLf
+                    'strSendData = strSendData & """AssAmt"": " + Trim(rs(9)) & "," & vbCrLf
+                    strSendData = strSendData & """AssAmt"": " + Trim(rs(12)) & "," & vbCrLf
+                     'strSendData = strSendData & """AssAmt"": " + Trim(Val(rs(9) + Val(lblTotalCharges))) & "," & vbCrLf
+                    
+'                    strSendData = strSendData & """AssAmt"": " + Trim(totamt1) & "," & vbCrLf
+
+                    'strSendData = strSendData & """AssAmt"": 547450" & "," & vbCrLf
+
+'                    strSendData = strSendData & """GstRt"": " + IGST_Rate & "," & vbCrLf
+                    strSendData = strSendData & """GstRt"": " + Trim(Val(IGST_Rate) + Val(CGST_Rate) + Val(CGST_Rate)) & "," & vbCrLf
+                    
+                    strSendData = strSendData & """IgstAmt"": " + Format(Trim((Val(IGST_Rate) / 100) * Val((rs(12)))), "#0.00") & "," & vbCrLf
+                    strSendData = strSendData & """CgstAmt"": " + Format(Trim((Val(CGST_Rate) / 100) * Val(rs(12))), "#0.00") & "," & vbCrLf
+                    strSendData = strSendData & """SgstAmt"": " + Format(Trim((Val(SGST_Rate) / 100) * Val(rs(12))), "#0.00") & "," & vbCrLf
+''                    IGST_AMT = Trim((Val(IGST_Rate) / 100) * Val(totamt1))
+''                    IGST_AMT = VBA.Format(IGST_AMT, "#0.00")
+''                    CGST_AMT = Trim((Val(CGST_Rate) / 100) * Val(totamt1))
+''                    CGST_AMT = VBA.Format(CGST_AMT, "#0.00")
+''                    SGST_AMT = Trim((Val(SGST_Rate) / 100) * Val(totamt1))
+''                    SGST_AMT = VBA.Format(SGST_AMT, "#0.00")
+''''                    strSendData = strSendData & """IgstAmt"": " + Trim((Val(IGST_Rate) / 100) * Val(totamt1)) & "," & vbCrLf
+''''                    strSendData = strSendData & """CgstAmt"": " + Trim((Val(CGST_Rate) / 100) * Val(totamt1)) & "," & vbCrLf
+''''                    strSendData = strSendData & """SgstAmt"": " + Trim((Val(SGST_Rate) / 100) * Val(totamt1)) & "," & vbCrLf
+''
+''                    strSendData = strSendData & """IgstAmt"": " + IGST_AMT & "," & vbCrLf
+''                    strSendData = strSendData & """CgstAmt"": " + CGST_AMT & "," & vbCrLf
+''                    strSendData = strSendData & """SgstAmt"": " + SGST_AMT & "," & vbCrLf
+
+                    
+                    strSendData = strSendData & """CesRt"": 0" & "," & vbCrLf
+                    strSendData = strSendData & """CesAmt"": 0" & "," & vbCrLf
+                    strSendData = strSendData & """CesNonAdvlAmt"": 0" & "," & vbCrLf
+                    strSendData = strSendData & """StateCesRt"": 0" & "," & vbCrLf
+                    strSendData = strSendData & """StateCesAmt"": 0" & "," & vbCrLf
+                    strSendData = strSendData & """StateCesNonAdvlAmt"": 0" & "," & vbCrLf
+                    strSendData = strSendData & """OthChrg"":0 " & "," & vbCrLf
+                    strSendData = strSendData & """TotItemVal"": " + Format(Trim(Val(rs(12)) + (Trim(Val(IGST_Rate) + Val(CGST_Rate) + Val(CGST_Rate)) / 100) * Val(rs(12))), "#0.00") & "," & vbCrLf
+'                    strSendData = strSendData & """TotItemVal"": " + Trim(Val(totamt1) + (Trim(Val(IGST_Rate) + Val(CGST_Rate) + Val(CGST_Rate)) / 100) * Val(rs(9))) & "," & vbCrLf
+
+                    strSendData = strSendData & """OrdLineRef"": ""3256""" & "," & vbCrLf
+                    strSendData = strSendData & """OrgCntry"": ""AG""" & "," & vbCrLf
+                    strSendData = strSendData & """PrdSlNo"": ""12345""" & "},"
+
+''                    strSendData = strSendData & """cgstRate"": " + CGST_Rate & "," & vbCrLf
+''                    strSendData = strSendData & """sgstRate"": " + SGST_Rate & "," & vbCrLf
+''                    strSendData = strSendData & """igstRate"": " + IGST_Rate & "," & vbCrLf
+''                    strSendData = strSendData & """cessRate"": 0" & "," & vbCrLf
+''                    strSendData = strSendData & """cessNonadvol"": 0" & "," & vbCrLf
+'                    strSendData = strSendData & """taxableAmount"": " + Trim(rs(9)) & "},"
+    rs.MoveNext
+    CTR = CTR + 1
+    Wend
+    
+    'Code For Delivery Charges
+    Set RsDeL = New Recordset
+    If RsDeL.State = 1 Then rs.Close
+    'RsDeL.Open "select * from sales_charges where salesno=" & VBA.Trim(srno) & "", gConDb, adOpenDynamic, adLockOptimistic
+    sql_Str = "select srno,ch_det,amount from sales_charges where salessno=" & VBA.Trim(srno) & ""
+    If RsDeL.State = adStateOpen Then RsDeL.Close
+    RsDeL.Open sql_Str, gConDb, adOpenForwardOnly, adLockReadOnly
+
+    If RsDeL.EOF = False Then
+    While RsDeL.EOF <> True
+                    strSendData = strSendData & "{""SlNo"": """ + Trim(CTR) & """," & vbCrLf
+                    'strSendData = strSendData & """PrdDesc"": """ + ItemName + " " + rs(4) & """," & vbCrLf
+                     strSendData = strSendData & """PrdDesc"": """ + RsDeL("ch_det") & """," & vbCrLf
+                    strSendData = strSendData & """IsServc"": ""Y""" & "," & vbCrLf
+                    StrHSN = "996511"
+                    strSendData = strSendData & """HsnCd"": """ + StrHSN & """," & vbCrLf
+                    strSendData = strSendData & """Barcde"": ""123456""" & "," & vbCrLf
+                    
+                    strSendData = strSendData & """Qty"": 1" & "," & vbCrLf
+
+                    strSendData = strSendData & """FreeQty"": 0" & "," & vbCrLf
+'                    If rs(6) = "KG" Then
+                        strSendData = strSendData & """Unit"": ""KGS""" & "," & vbCrLf
+'                    Else
+'                        strSendData = strSendData & """Unit"": """ + rs(6) & """," & vbCrLf
+'                    End If
+                    strSendData = strSendData & """UnitPrice"": " + Trim(Val(RsDeL(2))) & "," & vbCrLf
+                    strSendData = strSendData & """TotAmt"": " + Trim(Val(RsDeL(2))) & "," & vbCrLf
+                    strSendData = strSendData & """Discount"":0 " & "," & vbCrLf
+                    strSendData = strSendData & """PreTaxVal"": 0" & "," & vbCrLf
+                    strSendData = strSendData & """AssAmt"": " + Trim(RsDeL(2)) & "," & vbCrLf
+                    strSendData = strSendData & """GstRt"": " + Trim(Val(IGST_Rate) + Val(CGST_Rate) + Val(CGST_Rate)) & "," & vbCrLf
+                    
+                    strSendData = strSendData & """IgstAmt"": " + Trim((Val(IGST_Rate) / 100) * Val((RsDeL(2)))) & "," & vbCrLf
+                    strSendData = strSendData & """CgstAmt"": " + Trim((Val(CGST_Rate) / 100) * Val(RsDeL(2))) & "," & vbCrLf
+                    strSendData = strSendData & """SgstAmt"": " + Trim((Val(SGST_Rate) / 100) * Val(RsDeL(2))) & "," & vbCrLf
+                    strSendData = strSendData & """CesRt"": 0" & "," & vbCrLf
+                    strSendData = strSendData & """CesAmt"": 0" & "," & vbCrLf
+                    strSendData = strSendData & """CesNonAdvlAmt"": 0" & "," & vbCrLf
+                    strSendData = strSendData & """StateCesRt"": 0" & "," & vbCrLf
+                    strSendData = strSendData & """StateCesAmt"": 0" & "," & vbCrLf
+                    strSendData = strSendData & """StateCesNonAdvlAmt"": 0" & "," & vbCrLf
+                    strSendData = strSendData & """OthChrg"":0 " & "," & vbCrLf
+                    strSendData = strSendData & """TotItemVal"": " + Trim(Val(RsDeL(2)) + (Trim(Val(IGST_Rate) + Val(CGST_Rate) + Val(CGST_Rate)) / 100) * Val(RsDeL(2))) & "," & vbCrLf
+
+                    strSendData = strSendData & """OrdLineRef"": ""3256""" & "," & vbCrLf
+                    strSendData = strSendData & """OrgCntry"": ""AG""" & "," & vbCrLf
+                    strSendData = strSendData & """PrdSlNo"": ""12345""" & "},"
+
+
+    'End If
+    
+    RsDeL.MoveNext
+    CTR = CTR + 1
+    Wend
+    End If
+    'Code For Delivery Charges
+    
+    If Right(strSendData, 1) = "," Then
+        strSendData = Left(strSendData, Len(strSendData) - 1)
+    End If
+    strSendData = strSendData & "],"
+
+    strSendData = strSendData & """ValDtls"": {" & vbCrLf
+    'strSendData = strSendData & """AssVal"": " + lblSubTotal & "," & vbCrLf
+' strSendData = strSendData & """AssVal"": " + Format(Trim(SubTotalAmt), "#0.00") & "," & vbCrLf
+    strSendData = strSendData & """AssVal"": " + Trim(Val(lblSubTotal) + Val(lblTotalCharges)) & "," & vbCrLf ''dated 13/06/2022 for calculate cash discount
+    'strSendData = strSendData & """AssVal"": " + Trim(Val(lblSubTotal) + Val(lblTotalCharges) - Val(lblcashdis)) & "," & vbCrLf
+    strSendData = strSendData & """CgstVal"": " + CGST_VALUE & "," & vbCrLf
+    strSendData = strSendData & """SgstVal"": " + SGST_VALUE & "," & vbCrLf
+    strSendData = strSendData & """IgstVal"": " + IGST_VALUE & "," & vbCrLf
+
+''    strSendData = strSendData & """CgstVal"": " + CGST_AMT & "," & vbCrLf
+''    strSendData = strSendData & """SgstVal"": " + SGST_AMT & "," & vbCrLf
+''    strSendData = strSendData & """IgstVal"": " + IGST_AMT & "," & vbCrLf
+    
+    strSendData = strSendData & """CesVal"": 0" & "," & vbCrLf
+    strSendData = strSendData & """StCesVal"": 0" & "," & vbCrLf
+    strSendData = strSendData & """Discount"": " + lblTradDis & "," & vbCrLf  'dated 13/06/2022 for calculate cash discount
+    'strSendData = strSendData & """Discount"": " + lblcashdis & "," & vbCrLf
+    strSendData = strSendData & """OthChrg"": " + StrOther & "," & vbCrLf
+    strSendData = strSendData & """RndOffAmt"": 0" & "," & vbCrLf
+'    strSendData = strSendData & """TotInvVal"": " + Trim(rs(9)) & "," & vbCrLf
+'    strSendData = strSendData & """TotInvValFc"": " + Trim(rs(9)) & "," & vbCrLf
+    'strSendData = strSendData & """TotInvVal"": " + Trim(Round(Val(lblInvoiceAmt))) & "," & vbCrLf
+    strSendData = strSendData & """TotInvVal"": " + Trim(TotInvAmt) & "," & vbCrLf
+    strSendData = strSendData & """TotInvValFc"": " + lblInvoiceAmt & vbCrLf
+    strSendData = strSendData & "}," & vbCrLf
+
+    strSendData = strSendData & """PayDtls"": {" & vbCrLf
+    strSendData = strSendData & """Nm"": ""ABCDE""" & "," & vbCrLf
+    strSendData = strSendData & """Accdet"": ""5697389713210""" & "," & vbCrLf
+    strSendData = strSendData & """Mode"": ""Cash""" & "," & vbCrLf
+    strSendData = strSendData & """Fininsbr"": ""SBIN11000""" & "," & vbCrLf
+    strSendData = strSendData & """Payterm"": ""100""" & "," & vbCrLf
+    strSendData = strSendData & """Payinstr"": ""Gift""" & "," & vbCrLf
+    strSendData = strSendData & """Crtrn"": ""test""" & "," & vbCrLf
+    strSendData = strSendData & """Dirdr"": ""test""" & "," & vbCrLf
+    strSendData = strSendData & """Crday"": 0" & "," & vbCrLf
+    strSendData = strSendData & """Paidamt"": 0" & "," & vbCrLf
+    strSendData = strSendData & """Paymtdue"": 0" & vbCrLf
+    strSendData = strSendData & "}" & vbCrLf
+
+''    strSendData = strSendData & """EwbDtls"": {" & vbCrLf
+''    'strSendData = strSendData & """TransId"": ""12AWGPV7107B1Z1""" & "," & vbCrLf
+''    strSendData = strSendData & """TransId"": """ + STRGSTIN & """," & vbCrLf
+''
+''    strSendData = strSendData & """TransName"": ""XYZ EXPORTS""" & "," & vbCrLf
+''    strSendData = strSendData & """Distance"": 0" & "," & vbCrLf
+''    strSendData = strSendData & """TransDocNo"": """ + txtInvNo & """," & vbCrLf
+''    strSendData = strSendData & """TransDocDt"": """ + strInvDate1 & """," & vbCrLf
+''    strSendData = strSendData & """VehNo"": ""PVC1234""" & "," & vbCrLf
+''    strSendData = strSendData & """VehType"": ""R""" & "," & vbCrLf
+''    strSendData = strSendData & """TransMode"": ""1""" & vbCrLf
+''
+''    strSendData = strSendData & "}" & vbCrLf
+
+
+    strSendData = strSendData & "}"
+    
