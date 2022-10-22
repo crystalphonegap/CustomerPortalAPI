@@ -306,6 +306,76 @@ namespace CustomerPortalWebApi.Controllers
         }
 
 
+        //use for download BalConfHeaderDataForRH
+        [HttpGet("downloadBalConfHeaderDataForRH/{fromdate},{todate},{usertype},{usercode},{Region},{Branch},{Territory}")]
+        public IActionResult downloadBalConfHeaderDataForRH(string fromdate, string todate, string usertype, string usercode, string Region, string Branch, string Territory)
+        {
+            try
+            {
+                string Token = Request.Headers["Authorization"];
+                string[] authorize = Token.Split(" ");
+                if (_Checktokenservice.CheckToken(authorize[1].Trim(), usercode))
+                {
+                    List<BalConfirmationModel> Balconf = _BalanceConfirmationService.GetBalanceConfHeaderforRegionalAccountingHeadDownload(usertype, usercode, fromdate, todate, Region, Branch, Territory);
+                    using (var workbook = new XLWorkbook())
+                    {
+                        var worksheet = workbook.Worksheets.Add("BalanceConfirmation");
+                        var currentRow = 1;
+                        var srNo = 1;
+                        worksheet.Cell(currentRow, 1).Value = "Sr No";
+                        worksheet.Cell(currentRow, 2).Value = "Customer Code";
+                        worksheet.Cell(currentRow, 3).Value = "Customer Name";
+                        worksheet.Cell(currentRow, 4).Value = "Request No";
+                        worksheet.Cell(currentRow, 5).Value = "Request Date";
+                        worksheet.Cell(currentRow, 6).Value = "Region Description";
+                        worksheet.Cell(currentRow, 7).Value = "Branch Name";
+                        worksheet.Cell(currentRow, 8).Value = "SalesOffice Name";
+                        worksheet.Cell(currentRow, 9).Value = "Balance Confirmation Status";
+                        worksheet.Cell(currentRow, 10).Value = "Balance Confirmation Action";
+                        worksheet.Cell(currentRow, 11).Value = "Opening Balance";
+                        worksheet.Cell(currentRow, 12).Value = "SecurityDeposit";
+                        foreach (var orders in Balconf)
+                        {
+                            currentRow++;
+                            worksheet.Cell(currentRow, 1).Value = srNo++;
+                            worksheet.Cell(currentRow, 2).Value = orders.CustomerCodevtxt;
+                            worksheet.Cell(currentRow, 3).Value = orders.CustomerNamevtxt;
+                            worksheet.Cell(currentRow, 4).Value = orders.RequestNovtxt;
+                            worksheet.Cell(currentRow, 5).Value = orders.CreatedDatetimedatetime;
+                            worksheet.Cell(currentRow, 6).Value = orders.RegionNamevtxt;
+                            worksheet.Cell(currentRow, 7).Value = orders.BranchNamevtxt;
+                            worksheet.Cell(currentRow, 8).Value = orders.TerritoryNamevtxt;
+                            worksheet.Cell(currentRow, 9).Value = orders.BalanceConfirmationStatus;
+                            worksheet.Cell(currentRow, 10).Value = orders.BalanceConfirmationAction;
+                            worksheet.Cell(currentRow, 11).Value = orders.OpeningBalancedcl;
+                            worksheet.Cell(currentRow, 12).Value = orders.Securitydeposit;
+                        }
+
+                        using (var stream = new MemoryStream())
+                        {
+                            workbook.SaveAs(stream);
+                            var content = stream.ToArray();
+
+                            return File(
+                                content,
+                                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                "BalanceConfirmation.xlsx");
+                        }
+                    }
+                }
+                else
+                {
+                    return Ok("Un Authorized User");
+                }
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return BadRequest();
+            }
+        }
+
+
         //use for Get BalConf Action Report 
         [HttpGet("GetBalConfHeaderDataForActionReport/{fromdate},{todate},{usertype},{usercode},{Region},{Branch},{Territory},{PageNo},{PageSize}")]
         public IActionResult GetBalConfHeaderDataForActionReport(string fromdate, string todate, string usertype, string usercode, string Region, string Branch, string Territory, int PageNo, int PageSize)
@@ -366,7 +436,7 @@ namespace CustomerPortalWebApi.Controllers
                     List<BalConfirmationActionLogModel> Balconf=_BalanceConfirmationService.GetBalanceConfirmationActionLogDownload(usertype, usercode, fromdate, todate, Region, Branch, Territory);
                     using (var workbook = new XLWorkbook())
                     {
-                        var worksheet = workbook.Worksheets.Add("Order");
+                        var worksheet = workbook.Worksheets.Add("Balance Confirmation");
                         var currentRow = 1;
                         var srNo = 1;
                         worksheet.Cell(currentRow, 1).Value = "Sr No";
