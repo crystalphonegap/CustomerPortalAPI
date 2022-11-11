@@ -70,5 +70,7 @@ namespace CustomerPortalWebApi.Interface
         List<BalConfirmationActionLogModel> GetBalanceConfirmationActionLog(string usertype, string usercode, string fromdate, string todate, string Region, string Branch, string Territory, int PageNo, int PageSize);
 
         long GetBalanceConfirmationActionLogCount(string usertype, string usercode, string fromdate, string todate, string Region, string Branch, string Territory);
+
+        List<BalConfirmationActionLogModel> GetBalanceConfirmationActionLogDownload(string usertype, string usercode, string fromdate, string todate, string Region, string Branch, string Territory);
     }
 }

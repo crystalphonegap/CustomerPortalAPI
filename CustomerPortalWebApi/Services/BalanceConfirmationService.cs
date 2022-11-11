@@ -564,6 +564,48 @@ namespace CustomerPortalWebApi.Services
             return data;
         }
 
+        public List<BalConfirmationActionLogModel> GetBalanceConfirmationActionLogDownload(string usertype, string usercode, string fromdate, string todate, string Region, string Branch, string Territory)
+        {
+            DateTime fdate = DateTime.ParseExact(fromdate, "dd-MM-yyyy", null);
+            DateTime tdate = DateTime.ParseExact(todate, "dd-MM-yyyy", null);
+            var dbPara = new DynamicParameters();
+            dbPara.Add("usertype", usertype, DbType.String);
+            dbPara.Add("usercode", usercode, DbType.String);
+            dbPara.Add("fromDate", Convert.ToDateTime(fdate).ToString("yyyy-MM-dd"), DbType.String);
+            dbPara.Add("todate", Convert.ToDateTime(tdate).ToString("yyyy-MM-dd"), DbType.String);
+            if (Region == "NoSearch")
+            {
+                dbPara.Add("Region", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("Region", Region, DbType.String);
+            }
+            if (Branch == "NoSearch")
+            {
+                dbPara.Add("Branch", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("Branch", Branch, DbType.String);
+            }
+            if (Territory == "NoSearch")
+            {
+                dbPara.Add("Territory", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("Territory", Territory, DbType.String);
+            }
+            dbPara.Add("PageNo", 0, DbType.Int32);
+            dbPara.Add("PageSize", 0, DbType.Int32);
+            dbPara.Add("Mode", "Count", DbType.String);
+            var data = _customerPortalHelper.GetAll<BalConfirmationActionLogModel>("[dbo].[USP_GetBalanceConfActionReport]",
+                            dbPara,
+                            commandType: CommandType.StoredProcedure);
+            return data;
+        }
+
         public long GetBalanceConfirmationActionLogCount(string usertype, string usercode, string fromdate, string todate, string Region, string Branch, string Territory)
         {
             DateTime fdate = DateTime.ParseExact(fromdate, "dd-MM-yyyy", null);
