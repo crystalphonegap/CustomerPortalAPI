@@ -576,6 +576,21 @@ namespace CustomerPortalWebApi.Services
                 return null;
             }
         }
+
+        public List<CustomerMasterModel> GetCustomerforRCH(string UserId)
+        {
+            var dbPara = new DynamicParameters();
+            dbPara.Add("UserCode", UserId, DbType.String);
+            var data = _customerPortalHelper.GetAll<CustomerMasterModel>("[dbo].[USP_GetCustomerMasterforRCH]", dbPara, commandType: CommandType.StoredProcedure);
+            if (data != null)
+            {
+                return data;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 
 

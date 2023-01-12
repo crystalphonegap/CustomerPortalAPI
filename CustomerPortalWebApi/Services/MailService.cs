@@ -428,6 +428,8 @@ namespace CustomerPortalWebApi.Services
             var returndata = "";
             Boolean SMS = false;
 
+
+
             OTPSuccessfullModel OTPSuccessfullModel = new OTPSuccessfullModel();
 
             //if (!string.IsNullOrEmpty(mobileno))
@@ -445,16 +447,27 @@ namespace CustomerPortalWebApi.Services
 
             var client = new HttpClient();
             var Message = string.Format("Dear User, Please use OTP {0} to Login on Bandhan Dealer Portal. This OTP is valid for 15 min", num);// Dear User, Please use OTP {0} to Login on Bandhan Dealer Portal. This OTP is valid for 15 min
-            var Url = _config["SMS:URL"];
-            var urlstring = string.Format(Url, data[0].MOBILE, Message);
-            client.BaseAddress = (new Uri(urlstring));
-            client.DefaultRequestHeaders.Add("ContentType", "application/json");
-            HttpResponseMessage responsePost = await client.GetAsync(client.BaseAddress.ToString());
+            //var Url = _config["SMS:URL"];
+            //var urlstring = string.Format(Url, data[0].MOBILE, Message);
+            //client.BaseAddress = (new Uri(urlstring));
+            //client.DefaultRequestHeaders.Add("ContentType", "application/json");
+            //HttpResponseMessage responsePost = await client.GetAsync(client.BaseAddress.ToString());
             //{http://bhashsms.com/api/sendmsg.php?user=prismcement&pass=Pcl@2017&sender=PRISMD&phone=8450929346&text=Dear User, Please use OTP RS651525 to reset your password of Bandhan Dealer Portal. This OTP is valid for 15 min&priority=ndnd&stype=normal}
-            if (responsePost.IsSuccessStatusCode)
+
+            SMSAuthResponse SMSAuthResponse = SMSAuthcheck();
+            if (SMSAuthResponse.token != "")
             {
-                SMS = true;
+                UploadSendMessage(SMSAuthResponse, data[0].MOBILE,num.ToString(), UserCode);
             }
+            else
+            {
+
+            }
+
+            //if (responsePost.IsSuccessStatusCode)
+            //{
+            //    SMS = true;
+            //}
 
             OTPSuccessfullModel.MOBILE = data[0].MOBILE;
             OTPSuccessfullModel.OTP = data[0].OTP;
@@ -588,6 +601,33 @@ namespace CustomerPortalWebApi.Services
             var urlstring = string.Format(Url, mobileno, Message);
             HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(urlstring);
             httpRequest.Method = "GET";
+            httpRequest.Headers.Add("Authorization", "Bearer " + SMSAuthResponse.token);
+
+
+            HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+            using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                //change on live
+                string result = streamReader.ReadToEnd();
+
+            }
+
+
+        }
+
+
+        public void UploadSendMessage(SMSAuthResponse SMSAuthResponse, string mobileno,string OTP, string UserCode)
+        {
+
+
+            var client = new HttpClient();
+            var HeaderURL = _config["SendSMS:SMSURL"];
+
+            var Message = string.Format("प्रिय विक्रेता बंधू, प्रिज्म बंधन में आपका {0} माह का बही खाता चढ़ चुका है | अपना बही खाता देखने के लिए लॉगिन करे https://bandhan.prismcement.com/ पर |&category=bulk&coding=3", OTP);
+            var Url = _config["SendSMS:SMSURL"];
+            var urlstring = string.Format(Url, mobileno, Message);
+            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(urlstring);
+            httpRequest.Method = "POST";
             httpRequest.Headers.Add("Authorization", "Bearer " + SMSAuthResponse.token);
 
 

@@ -11,6 +11,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 
 namespace CustomerPortalWebApi.Controllers
@@ -23,17 +24,19 @@ namespace CustomerPortalWebApi.Controllers
         private readonly IBalanceConfirmationService _BalanceConfirmationService;
         private readonly ILogger _ILogger;
         private readonly IChecktokenservice _Checktokenservice;
+        private readonly ICustomerMasterService _CustomerMasterService;
 
         [Obsolete]
         private IHostingEnvironment _hostingEnvironment;
 
         [Obsolete]
-        public BalanceConfirmationController(IHostingEnvironment environment, IBalanceConfirmationService BalanceConfirmationService, ILogger ILoggerservice, IChecktokenservice checktokenservice)
+        public BalanceConfirmationController(IHostingEnvironment environment, IBalanceConfirmationService BalanceConfirmationService, ILogger ILoggerservice, IChecktokenservice checktokenservice, ICustomerMasterService customerMasterService)
         {
             _ILogger = ILoggerservice;
             _BalanceConfirmationService = BalanceConfirmationService;
             _Checktokenservice = checktokenservice;
             _hostingEnvironment = environment;
+            _CustomerMasterService = customerMasterService;
         }
 
         //use for Get Request No
@@ -191,6 +194,91 @@ namespace CustomerPortalWebApi.Controllers
                 _ILogger.Log(ex);
                 return StatusCode(500, "Internal server error");
             }
+        }
+
+
+        //******use for upload Balance confirmation in Regional Accounting Head
+        [HttpPost("SubmitBalanceConfirmationforRAH/{fromdate},{todate},{expirydate},{createdby},{usercode},{Type}")]
+        public IActionResult SubmitBalanceConfirmationforRAH(string fromdate, string todate, string expirydate, string createdby, string usercode, string Type)
+        {
+            try
+            {
+                string Token = Request.Headers["Authorization"];
+                string[] authorize = Token.Split(" ");
+                if (_Checktokenservice.CheckToken(authorize[1].Trim(), createdby))
+                {
+                    DataTable finalRecords = new DataTable();
+                    finalRecords = ToDataTable(_CustomerMasterService.GetCustomerforRCH(usercode));
+                    List<BalConfirmationModel> lstbalconf = new List<BalConfirmationModel>();
+                    string OrdNo = "";
+                    OrdNo = _BalanceConfirmationService.GetOrderNo();
+                    OrdNo = GetReqNo(OrdNo);
+                    for (int i = 1; i < finalRecords.Rows.Count; i++)
+                    {
+                        DateTime tempfromdate = DateTime.ParseExact(fromdate, "dd-MM-yyyy", null);
+                        DateTime temptodate = DateTime.ParseExact(todate, "dd-MM-yyyy", null);
+                        DateTime tempexpirydate = DateTime.ParseExact(expirydate, "dd-MM-yyyy", null);
+                        BalConfirmationModel balconf = new BalConfirmationModel();
+                        balconf.RequestNovtxt = OrdNo;
+                        balconf.FromDatedatetime = Convert.ToDateTime(tempfromdate);
+                        balconf.ToDatedatetime = Convert.ToDateTime(temptodate);
+                        balconf.ExpiryDatedatetime = Convert.ToDateTime(tempexpirydate);
+                        balconf.DealerCodevtxt = finalRecords.Rows[i]["CustCodevtxt"].ToString();
+                        balconf.Typevtxt = Type;
+                        balconf.CreatedByvtxt = createdby;
+                        lstbalconf.Add(balconf);
+                    }
+                    if (lstbalconf.Count > 0)
+                    {
+                        _BalanceConfirmationService.DeleteTempBalConf(createdby);
+                        for (int k = 0; k < lstbalconf.Count; k++)
+                        {
+                            long j = _BalanceConfirmationService.InsertBalConfirmationIntoTempTable(lstbalconf[k]);
+                        }
+                        _BalanceConfirmationService.InsertBalConfirmationIntoMainTable(createdby);
+                        List<BalConfirmationModel> lst = new List<BalConfirmationModel>();
+                        lst = _BalanceConfirmationService.GetTempBalConfirm(createdby);
+                        if (lst.Count > 0)
+                        {
+                            return Ok("Error in Uploaded File");
+                        }
+                    }
+                    return Ok("file is  uploaded Successfully.");
+                }
+                else
+                {
+                    return Ok("Un Authorized User");
+                }
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        public DataTable ToDataTable<T>(List<T> items)
+        {
+            DataTable dataTable = new DataTable(typeof(T).Name);
+            //Get all the properties
+            PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo prop in Props)
+            {
+                //Setting column names as Property names
+                dataTable.Columns.Add(prop.Name);
+            }
+            foreach (T item in items)
+            {
+                var values = new object[Props.Length];
+                for (int i = 0; i < Props.Length; i++)
+                {
+                    //inserting property values to datatable rows
+                    values[i] = Props[i].GetValue(item, null);
+                }
+                dataTable.Rows.Add(values);
+            }
+            //put a breakpoint here and check datatable
+            return dataTable;
         }
 
         //use for DownloadBalanceConfirmation download error file

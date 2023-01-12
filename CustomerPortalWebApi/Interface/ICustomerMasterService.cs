@@ -2,6 +2,7 @@
 using CustomerPortalWebApi.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 
 namespace CustomerPortalWebApi.Interface
 {
@@ -51,5 +52,7 @@ namespace CustomerPortalWebApi.Interface
         int UploadMason(MasonModel Model);
 
         List<MasonModel> GetTempMason(int PageNo, int PageSize, string keyword);
+
+        List<CustomerMasterModel> GetCustomerforRCH(string UserId);
     }
 }

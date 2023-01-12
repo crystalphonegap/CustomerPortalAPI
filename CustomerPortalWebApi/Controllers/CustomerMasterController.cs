@@ -815,6 +815,20 @@ namespace CustomerPortalWebApi.Controllers
             }
         }
 
+        [AllowAnonymous]
+        [HttpGet("GetCustomerDataForRCH/{UserId}")]
+        public IActionResult GetCustomerDataForRCH(string UserId)
+        {
+            try
+            {
+                return Ok(_customerMasterService.GetCustomerforRCH(UserId));
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return BadRequest();
+            }
+        }
 
     }
 }
