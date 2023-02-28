@@ -39,6 +39,9 @@ namespace CustomerPortalWebApi.Interface
 
         List<LedgerBalanceConfirmationHeader> GetBalanceConfHeaderListForEmployee(string fromdate, string todate, string status, string usertype, string usercode, int PageNo, int PageSize, string KeyWord);
 
+        List<LedgerBalanceConfirmationHeader2> GetBalConfHeaderDataForEmployeesdownload(string fromdate, string todate, string status, string usertype, string usercode, int PageNo, int PageSize, string KeyWord);
+
+
         long GetBalanceConfHeaderListForEmployeeCount(string fromdate, string todate, string status, string usertype, string usercode, string KeyWord);
 
         List<LedgerBalanceConfirmationHeader> GetBalanceConfHeaderforSPCFA(string UserCode, int PageNo, int PageSize, string mode, long id);

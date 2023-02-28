@@ -942,5 +942,35 @@ namespace CustomerPortalWebApi.Services
                             commandType: CommandType.StoredProcedure);
             return data;
         }
+
+
+
+        public List<LedgerBalanceConfirmationHeader2> GetBalConfHeaderDataForEmployeesdownload(string fromdate, string todate, string status, string usertype, string usercode, int PageNo, int PageSize, string KeyWord)
+        {
+            var dbPara = new DynamicParameters();
+
+            DateTime fdate = DateTime.ParseExact(fromdate, "dd-MM-yyyy", null);
+            DateTime tdate = DateTime.ParseExact(todate, "dd-MM-yyyy", null);
+            dbPara.Add("fromDate", Convert.ToDateTime(fdate).ToString("yyyy-MM-dd"), DbType.String);
+            dbPara.Add("todate", Convert.ToDateTime(tdate).ToString("yyyy-MM-dd"), DbType.String);
+            dbPara.Add("Status", status, DbType.String);
+            dbPara.Add("UserType", "AllExcelReport", DbType.String);
+            dbPara.Add("UserCode", usercode, DbType.String);
+            dbPara.Add("PageNo", PageNo, DbType.Int32);
+            dbPara.Add("PageSize", PageSize, DbType.Int32);
+            if (KeyWord == "NoSearch")
+            {
+                dbPara.Add("KeyWord", "", DbType.String);
+            }
+            else
+            {
+                dbPara.Add("KeyWord", KeyWord, DbType.String);
+            }
+            var data = _customerPortalHelper.GetAll<LedgerBalanceConfirmationHeader2>("[dbo].[uspviewbalanceconfirmHeaderByUserType]",
+                            dbPara,
+                            commandType: CommandType.StoredProcedure);
+            return data;
+        }
+
     }
 }

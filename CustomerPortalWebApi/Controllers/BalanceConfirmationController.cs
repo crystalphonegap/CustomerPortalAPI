@@ -1541,5 +1541,29 @@ namespace CustomerPortalWebApi.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet("GetBalConfHeaderDataForEmployeesdownload/{fromdate},{todate},{status},{usertype},{usercode},{pageno},{pagesize},{keyword}")]
+        public IActionResult GetBalConfHeaderDataForEmployeesdownload(string fromdate, string todate, string status, string usertype, string usercode, int pageno, int pagesize, string keyword)
+        {
+            try
+            {
+                string Token = Request.Headers["Authorization"];
+                string[] authorize = Token.Split(" ");
+                if (_Checktokenservice.CheckToken(authorize[1].Trim(), usercode))
+                {
+                    return Ok(_BalanceConfirmationService.GetBalConfHeaderDataForEmployeesdownload(fromdate, todate, status, usertype, usercode, pageno, pagesize, keyword));
+                }
+                else
+                {
+                    return Ok("Un Authorized User");
+                }
+            }
+            catch (Exception ex)
+            {
+                _ILogger.Log(ex);
+                return BadRequest();
+            }
+        }
+
     }
 }
